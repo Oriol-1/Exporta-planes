@@ -39,14 +39,26 @@ export interface Env {
 }
 
 const DEFAULT_UA = 'bcn-curator/1.0 (+https://github.com/Oriol-1/Exporta-planes)'
+const DEFAULT_BASE_URL = 'https://oriol-1.github.io/Exporta-planes'
+
+/**
+ * Una variable de GitHub Actions que no existe llega como CADENA VACÍA, no como
+ * `undefined`, así que `??` no la sustituye por el valor por defecto. Sin esto,
+ * un `PUBLISH_BASE_URL` sin configurar produce una URL vacía y el build falla al
+ * validar el índice — que es exactamente lo que pasó la primera vez.
+ */
+function envOr(name: string, fallback: string): string {
+  const value = process.env[name]
+  return value === undefined || value.trim() === '' ? fallback : value.trim()
+}
 
 export function readEnv(): Env {
   loadDotEnvLocal()
+  const contactEmail = process.env['CRAWLER_CONTACT_EMAIL']?.trim()
   return {
-    userAgent: process.env['CRAWLER_USER_AGENT'] ?? DEFAULT_UA,
-    contactEmail: process.env['CRAWLER_CONTACT_EMAIL'],
-    publishBaseUrl:
-      process.env['PUBLISH_BASE_URL'] ?? 'https://oriol-1.github.io/Exporta-planes',
+    userAgent: envOr('CRAWLER_USER_AGENT', DEFAULT_UA),
+    contactEmail: contactEmail === undefined || contactEmail === '' ? undefined : contactEmail,
+    publishBaseUrl: envOr('PUBLISH_BASE_URL', DEFAULT_BASE_URL),
     producerVersion: readPackageVersion(),
   }
 }

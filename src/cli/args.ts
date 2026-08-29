@@ -48,7 +48,7 @@ export function hasFlag(args: Args, name: string): boolean {
 }
 
 export function stringArg(args: Args, name: string, fallback: string): string {
-  const value = args.values.get(name)
+  const value = args.values.get(name)?.trim()
   return value === undefined || value === '' ? fallback : value
 }
 
