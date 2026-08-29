@@ -1,0 +1,59 @@
+name: Publish
+
+# Construye y despliega. NO escribe nada en el repositorio (§9.2).
+#
+# `dist/` no se commitea: se sube como ARTEFACTO de Pages. Publicar por artefacto
+# en vez de commitear la salida generada evita tres problemas reales — historial
+# limpio, sin carreras por el push, y una sola fuente de verdad.
+#
+# OJO en Settings → Pages: Source debe ser «GitHub Actions». Con «Deploy from a
+# branch» el paso deploy-pages de este workflow falla.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'contracts/**'
+      - 'src/publish/**'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Grupo PROPIO: publicar no escribe el repositorio, así que no compite con
+# curate/reconcile y no tiene por qué esperar media hora detrás de un rastreo.
+concurrency:
+  group: bcn-curator-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # ── preparación (igual que en curate.yml) ──
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v5
+        with: { node-version: 24, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Construir dist/v1
+        env:
+          PUBLISH_BASE_URL: ${{ vars.PUBLISH_BASE_URL }}
+        run: pnpm publish:build
+
+      - name: Validar lo que se va a publicar
+        run: pnpm validate
+
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v5

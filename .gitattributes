@@ -1,0 +1,8 @@
+# La caché es derivada: GitHub la colapsa en el diff del PR de revisión
+.cache/**   linguist-generated=true -diff
+*.ndjson    -diff
+# El producto SÍ se lee: es el panel de revisión
+content/**  linguist-generated=false
+# Finales de línea estables entre Windows y los runners de Linux
+* text=auto eol=lf
+*.json      text eol=lf

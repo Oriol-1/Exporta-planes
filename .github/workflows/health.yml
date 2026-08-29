@@ -1,0 +1,46 @@
+name: Health
+
+# Los lunes, después del rastreo de museos: enlaces muertos, fuentes degradadas
+# y verificaciones legales caducadas (§4.6, §5.5, §12.1).
+#
+# Una degradación silenciosa —el refresco «funciona», trae datos, pero la calidad
+# se desploma— es peor que un fallo ruidoso. Esto la hace ruidosa.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # lunes, después del rastreo de museos
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      # ── preparación (igual que en curate.yml) ──
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v5
+        with: { node-version: 24, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Enlaces muertos, fuentes degradadas y verificaciones caducadas
+        env:
+          CRAWLER_USER_AGENT: ${{ vars.CRAWLER_USER_AGENT }}
+          CRAWLER_CONTACT_EMAIL: ${{ secrets.CRAWLER_CONTACT_EMAIL }}
+        run: pnpm report:health
+
+      - name: Precisión editorial, coste por ficha y cobertura
+        run: pnpm report:metrics
+
+      - name: Publicar el informe semanal como incidencia
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat .cache/weekly-report.md >> "$GITHUB_STEP_SUMMARY"
+          gh issue create \
+            --title "Informe semanal · $(date -u +%Y-%m-%d)" \
+            --body-file .cache/weekly-report.md \
+            --label informe

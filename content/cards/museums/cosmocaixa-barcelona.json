@@ -1,0 +1,95 @@
+{
+  "id": "curated|museums|cosmocaixa-barcelona",
+  "source": "curated",
+  "contentLang": "es",
+  "sourceId": "cosmocaixa-barcelona",
+  "sourceUrl": "https://cosmocaixa.org/es/",
+  "officialUrl": "https://cosmocaixa.org/es/",
+  "title": "CosmoCaixa Barcelona",
+  "description": "El museo de ciencia de la ciudad está enterrado bajo un edificio modernista de la falda del Tibidabo, y se recorre bajando por una rampa en espiral alrededor de un árbol. Abajo hay dos cosas que justifican el viaje: el Bosque Inundado, un trozo de selva amazónica de verdad —agua, humedad, peces y plantas vivas— que se atraviesa por dentro y por debajo, y el Muro Geológico, siete cortes de roca real que explican cómo se formó el terreno. Casi todo se toca y casi nada exige leer, así que funciona igual de bien con niños que sin ellos.",
+  "audience": "todos",
+  "startDate": "2026-08-29T00:00:00.000+02:00",
+  "endDate": "2027-08-29T00:00:00.000+02:00",
+  "venue": {
+    "name": "CosmoCaixa Barcelona",
+    "address": "Carrer d’Isaac Newton, 26, 08022 Barcelona",
+    "lat": 41.41,
+    "lng": 2.125556,
+    "neighborhood": "Sant Gervasi - La Bonanova",
+    "district": "Sarrià-Sant Gervasi",
+    "municipality": "barcelona",
+    "zipCode": "08022",
+    "locationPrecision": "exact"
+  },
+  "category": "museums",
+  "price": {
+    "type": "unknown"
+  },
+  "tags": [
+    "museums",
+    "ciencia",
+    "familiar",
+    "sarria-sant-gervasi"
+  ],
+  "i18n": {
+    "title": {
+      "es": "CosmoCaixa Barcelona",
+      "en": "CosmoCaixa Barcelona"
+    },
+    "description": {
+      "es": "El museo de ciencia de la ciudad está enterrado bajo un edificio modernista de la falda del Tibidabo, y se recorre bajando por una rampa en espiral alrededor de un árbol. Abajo hay dos cosas que justifican el viaje: el Bosque Inundado, un trozo de selva amazónica de verdad —agua, humedad, peces y plantas vivas— que se atraviesa por dentro y por debajo, y el Muro Geológico, siete cortes de roca real que explican cómo se formó el terreno. Casi todo se toca y casi nada exige leer, así que funciona igual de bien con niños que sin ellos.",
+      "en": "The city’s science museum is buried beneath a modernista building on the lower slopes of Tibidabo, and you go down into it along a spiral ramp wrapped around a tree. Two things down there justify the trip: the Flooded Forest, a genuine slice of Amazon rainforest — water, humidity, live fish and plants — that you walk through and underneath, and the Geological Wall, seven sections of real rock that explain how the ground was formed. Almost everything can be touched and almost nothing needs reading, so it works just as well with children as without them."
+    }
+  },
+  "curated": {
+    "collection": "museums",
+    "slug": "cosmocaixa-barcelona",
+    "schemaVersion": 1,
+    "curatedAt": "2026-08-29T09:00:00.000+02:00",
+    "promptVersion": "manual-v1",
+    "score": 86,
+    "temporality": "atemporal",
+    "consensus": {
+      "sourceCount": 1,
+      "sources": [
+        "venue-official"
+      ]
+    },
+    "whyWorthIt": {
+      "es": "Un trozo real de selva amazónica bajo tierra, atravesable por dentro y por debajo.",
+      "en": "A real slice of Amazon rainforest underground, walked through from inside and below."
+    },
+    "practical": {
+      "booking": "recomendada",
+      "activityLang": [
+        "sin-idioma"
+      ],
+      "transit": {
+        "es": "FGC Avinguda Tibidabo (L7) y unos 600 m cuesta arriba, o el bus 196.",
+        "en": "FGC Avinguda Tibidabo (L7) then a 600 m climb, or the 196 bus."
+      }
+    },
+    "museum": {
+      "visitMinutes": 150
+    },
+    "provenance": [
+      {
+        "url": "https://cosmocaixa.org/es/",
+        "publisher": "CosmoCaixa Barcelona",
+        "tier": "C",
+        "retrievedAt": "2026-08-29T09:00:00.000+02:00"
+      }
+    ],
+    "verified": {
+      "price": false,
+      "schedule": false,
+      "dates": false,
+      "location": true,
+      "method": "catalogo-manual"
+    },
+    "planonmap": {
+      "dedupeKey": "cosmocaixabarcelona|2026-08-29|41.41|2.13",
+      "mergeHint": "new"
+    }
+  }
+}

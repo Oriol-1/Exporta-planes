@@ -1,0 +1,94 @@
+{
+  "id": "curated|museums|macba",
+  "source": "curated",
+  "contentLang": "es",
+  "sourceId": "macba",
+  "sourceUrl": "https://www.macba.cat/",
+  "officialUrl": "https://www.macba.cat/",
+  "title": "MACBA · Museu d’Art Contemporani de Barcelona",
+  "description": "El edificio blanco de Richard Meier aterrizó en el Raval en los años noventa y cambió el barrio entero. Dentro se cuenta el arte de la segunda mitad del siglo XX y lo que ha venido después, con un peso claro de lo conceptual y de los artistas catalanes y españoles; las exposiciones temporales suelen ser más ambiciosas que la permanente y conviene mirar qué hay antes de ir. Fuera, la plaza se ha convertido en el punto de encuentro de los patinadores de la ciudad, y ese contraste entre la rampa acristalada y el ruido de la calle es parte de la visita.",
+  "audience": "todos",
+  "startDate": "2026-08-29T00:00:00.000+02:00",
+  "endDate": "2027-08-29T00:00:00.000+02:00",
+  "venue": {
+    "name": "MACBA · Museu d’Art Contemporani de Barcelona",
+    "address": "Plaça dels Àngels, 1, 08001 Barcelona",
+    "lat": 41.383056,
+    "lng": 2.166667,
+    "neighborhood": "El Raval",
+    "district": "Ciutat Vella",
+    "municipality": "barcelona",
+    "zipCode": "08001",
+    "locationPrecision": "exact"
+  },
+  "category": "museums",
+  "price": {
+    "type": "unknown"
+  },
+  "tags": [
+    "museums",
+    "arte-contemporaneo",
+    "ciutat-vella"
+  ],
+  "i18n": {
+    "title": {
+      "es": "MACBA · Museu d’Art Contemporani de Barcelona",
+      "en": "MACBA · Barcelona Museum of Contemporary Art"
+    },
+    "description": {
+      "es": "El edificio blanco de Richard Meier aterrizó en el Raval en los años noventa y cambió el barrio entero. Dentro se cuenta el arte de la segunda mitad del siglo XX y lo que ha venido después, con un peso claro de lo conceptual y de los artistas catalanes y españoles; las exposiciones temporales suelen ser más ambiciosas que la permanente y conviene mirar qué hay antes de ir. Fuera, la plaza se ha convertido en el punto de encuentro de los patinadores de la ciudad, y ese contraste entre la rampa acristalada y el ruido de la calle es parte de la visita.",
+      "en": "Richard Meier’s white building landed in the Raval in the nineties and changed the whole neighbourhood. Inside, it tells the story of art from the second half of the twentieth century onwards, leaning hard towards the conceptual and towards Catalan and Spanish artists; the temporary shows are usually more ambitious than the permanent display, so check what is on before you go. Outside, the square has become the meeting point for the city’s skaters, and that contrast between the glazed ramp and the noise of the street is part of the visit."
+    }
+  },
+  "curated": {
+    "collection": "museums",
+    "slug": "macba",
+    "schemaVersion": 1,
+    "curatedAt": "2026-08-29T09:00:00.000+02:00",
+    "promptVersion": "manual-v1",
+    "score": 84,
+    "temporality": "atemporal",
+    "consensus": {
+      "sourceCount": 1,
+      "sources": [
+        "venue-official"
+      ]
+    },
+    "whyWorthIt": {
+      "es": "Arte contemporáneo exigente en un edificio que reordenó el Raval a su alrededor.",
+      "en": "Demanding contemporary art in a building that rearranged the Raval around it."
+    },
+    "practical": {
+      "booking": "recomendada",
+      "activityLang": [
+        "sin-idioma"
+      ],
+      "transit": {
+        "es": "Metro Universitat (L1 y L2) o Catalunya (L1, L3), a unos 500 m.",
+        "en": "Universitat metro (L1, L2) or Catalunya (L1, L3), about 500 m away."
+      }
+    },
+    "museum": {
+      "visitMinutes": 90
+    },
+    "provenance": [
+      {
+        "url": "https://www.macba.cat/",
+        "publisher": "MACBA · Museu d’Art Contemporani de Barcelona",
+        "tier": "C",
+        "retrievedAt": "2026-08-29T09:00:00.000+02:00"
+      }
+    ],
+    "verified": {
+      "price": false,
+      "schedule": false,
+      "dates": false,
+      "location": true,
+      "method": "catalogo-manual"
+    },
+    "planonmap": {
+      "dedupeKey": "macbamuseudartcontemporanidebarcelona|2026-08-29|41.38|2.17",
+      "mergeHint": "new"
+    }
+  }
+}

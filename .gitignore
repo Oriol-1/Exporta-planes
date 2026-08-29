@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+# .cache/ SÍ se versiona: es lo que hace que no se pague dos veces (§3.3)

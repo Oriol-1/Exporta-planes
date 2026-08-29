@@ -1,0 +1,95 @@
+{
+  "id": "curated|museums|fundacio-joan-miro",
+  "source": "curated",
+  "contentLang": "es",
+  "sourceId": "fundacio-joan-miro",
+  "sourceUrl": "https://www.fmirobcn.org/",
+  "officialUrl": "https://www.fmirobcn.org/",
+  "title": "Fundació Joan Miró",
+  "description": "Miró donó su obra a la ciudad y encargó el edificio que la guarda a un amigo arquitecto, Josep Lluís Sert. El resultado, en lo alto de Montjuïc, es un edificio blanco de patios y lucernarios pensado para que la luz mediterránea entre y se reparta sola. Dentro hay pintura, escultura, tapices y la cerámica que hizo en sus últimos años; fuera, una terraza con una de las vistas más tranquilas de Barcelona. Se llega en funicular desde Paral·lel y conviene subir con tiempo: el propio parque, con sus jardines y sus esculturas al aire libre, pide media hora más.",
+  "audience": "todos",
+  "startDate": "2026-08-29T00:00:00.000+02:00",
+  "endDate": "2027-08-29T00:00:00.000+02:00",
+  "venue": {
+    "name": "Fundació Joan Miró",
+    "address": "Parc de Montjuïc, s/n, 08038 Barcelona",
+    "lat": 41.368611,
+    "lng": 2.16,
+    "neighborhood": "El Poble-sec",
+    "district": "Sants-Montjuïc",
+    "municipality": "barcelona",
+    "zipCode": "08038",
+    "locationPrecision": "exact"
+  },
+  "category": "museums",
+  "price": {
+    "type": "unknown"
+  },
+  "tags": [
+    "museums",
+    "arte",
+    "miro",
+    "sants-montjuic"
+  ],
+  "i18n": {
+    "title": {
+      "es": "Fundació Joan Miró",
+      "en": "Fundació Joan Miró"
+    },
+    "description": {
+      "es": "Miró donó su obra a la ciudad y encargó el edificio que la guarda a un amigo arquitecto, Josep Lluís Sert. El resultado, en lo alto de Montjuïc, es un edificio blanco de patios y lucernarios pensado para que la luz mediterránea entre y se reparta sola. Dentro hay pintura, escultura, tapices y la cerámica que hizo en sus últimos años; fuera, una terraza con una de las vistas más tranquilas de Barcelona. Se llega en funicular desde Paral·lel y conviene subir con tiempo: el propio parque, con sus jardines y sus esculturas al aire libre, pide media hora más.",
+      "en": "Miró gave his work to the city and asked a friend, the architect Josep Lluís Sert, to design the building that would hold it. The result, high on Montjuïc, is a white building of courtyards and skylights built so that Mediterranean light comes in and spreads on its own. Inside there is painting, sculpture, tapestry and the ceramics he made late in life; outside, a terrace with one of the calmest views in Barcelona. Come up on the funicular from Paral·lel and allow extra time: the park around it, with its gardens and outdoor sculpture, easily takes another half hour."
+    }
+  },
+  "curated": {
+    "collection": "museums",
+    "slug": "fundacio-joan-miro",
+    "schemaVersion": 1,
+    "curatedAt": "2026-08-29T09:00:00.000+02:00",
+    "promptVersion": "manual-v1",
+    "score": 88,
+    "temporality": "atemporal",
+    "consensus": {
+      "sourceCount": 1,
+      "sources": [
+        "venue-official"
+      ]
+    },
+    "whyWorthIt": {
+      "es": "Un museo construido a medida de su obra, con la mejor luz y una terraza sobre la ciudad.",
+      "en": "A museum built to fit the work it holds, with superb light and a terrace over the city."
+    },
+    "practical": {
+      "booking": "recomendada",
+      "activityLang": [
+        "sin-idioma"
+      ],
+      "transit": {
+        "es": "Funicular de Montjuïc desde Paral·lel (L2 y L3), y unos 400 m a pie.",
+        "en": "Montjuïc funicular from Paral·lel (L2 and L3), then a 400 m walk."
+      }
+    },
+    "museum": {
+      "visitMinutes": 100
+    },
+    "provenance": [
+      {
+        "url": "https://www.fmirobcn.org/",
+        "publisher": "Fundació Joan Miró",
+        "tier": "C",
+        "retrievedAt": "2026-08-29T09:00:00.000+02:00"
+      }
+    ],
+    "verified": {
+      "price": false,
+      "schedule": false,
+      "dates": false,
+      "location": true,
+      "method": "catalogo-manual"
+    },
+    "planonmap": {
+      "dedupeKey": "fundaciojoanmiro|2026-08-29|41.37|2.16",
+      "mergeHint": "new"
+    }
+  }
+}

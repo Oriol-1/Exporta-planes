@@ -1,0 +1,96 @@
+{
+  "id": "curated|museums|museu-picasso",
+  "source": "curated",
+  "contentLang": "es",
+  "sourceId": "museu-picasso",
+  "sourceUrl": "https://www.museupicasso.bcn.cat/",
+  "officialUrl": "https://www.museupicasso.bcn.cat/",
+  "ticketsUrl": "https://www.museupicasso.bcn.cat/es/entradas",
+  "title": "Museu Picasso",
+  "description": "Cinco palacios góticos encadenados en la calle Montcada guardan la colección más completa de la juventud de Picasso: los cuadernos de adolescencia, los años de aprendizaje en Barcelona y la serie que dedicó a Las Meninas. No es el Picasso de los carteles, sino el que todavía estaba aprendiendo a serlo, y por eso se entiende mejor aquí que en ningún otro sitio. El recorrido es cómodo y está bien señalizado, y los propios edificios —patios, escaleras exteriores, techos de madera— valen la visita aparte. Estás en el Born, así que la visita se encadena sin esfuerzo con Santa Maria del Mar y con un paseo por el barrio.",
+  "audience": "todos",
+  "startDate": "2026-08-29T00:00:00.000+02:00",
+  "endDate": "2027-08-29T00:00:00.000+02:00",
+  "venue": {
+    "name": "Museu Picasso",
+    "address": "Carrer de Montcada, 15-23, 08003 Barcelona",
+    "lat": 41.385228,
+    "lng": 2.180968,
+    "neighborhood": "Sant Pere, Santa Caterina i la Ribera",
+    "district": "Ciutat Vella",
+    "municipality": "barcelona",
+    "zipCode": "08003",
+    "locationPrecision": "exact"
+  },
+  "category": "museums",
+  "price": {
+    "type": "unknown"
+  },
+  "tags": [
+    "museums",
+    "arte",
+    "picasso",
+    "ciutat-vella"
+  ],
+  "i18n": {
+    "title": {
+      "es": "Museu Picasso",
+      "en": "Museu Picasso"
+    },
+    "description": {
+      "es": "Cinco palacios góticos encadenados en la calle Montcada guardan la colección más completa de la juventud de Picasso: los cuadernos de adolescencia, los años de aprendizaje en Barcelona y la serie que dedicó a Las Meninas. No es el Picasso de los carteles, sino el que todavía estaba aprendiendo a serlo, y por eso se entiende mejor aquí que en ningún otro sitio. El recorrido es cómodo y está bien señalizado, y los propios edificios —patios, escaleras exteriores, techos de madera— valen la visita aparte. Estás en el Born, así que la visita se encadena sin esfuerzo con Santa Maria del Mar y con un paseo por el barrio.",
+      "en": "Five linked Gothic palaces on Carrer Montcada hold the most complete collection of Picasso’s early years: the teenage sketchbooks, the apprentice work he made in Barcelona, and the series he devoted to Las Meninas. This is not the Picasso of the posters but the one still learning to be him, which is exactly why he makes more sense here than anywhere else. The route is easy to follow and clearly signed, and the buildings themselves — courtyards, outdoor staircases, timber ceilings — are worth the visit on their own. You are in El Born, so it pairs naturally with Santa Maria del Mar and a walk around the neighbourhood."
+    }
+  },
+  "curated": {
+    "collection": "museums",
+    "slug": "museu-picasso",
+    "schemaVersion": 1,
+    "curatedAt": "2026-08-29T09:00:00.000+02:00",
+    "promptVersion": "manual-v1",
+    "score": 91,
+    "temporality": "atemporal",
+    "consensus": {
+      "sourceCount": 1,
+      "sources": [
+        "venue-official"
+      ]
+    },
+    "whyWorthIt": {
+      "es": "La mejor colección del mundo del Picasso que aún estaba aprendiendo a ser Picasso.",
+      "en": "The world’s best collection of Picasso before he became Picasso."
+    },
+    "practical": {
+      "booking": "recomendada",
+      "activityLang": [
+        "sin-idioma"
+      ],
+      "transit": {
+        "es": "Metro Jaume I (L4), a unos 350 m. Buses por Via Laietana.",
+        "en": "Jaume I metro (L4), about 350 m away. Buses along Via Laietana."
+      }
+    },
+    "museum": {
+      "visitMinutes": 105
+    },
+    "provenance": [
+      {
+        "url": "https://www.museupicasso.bcn.cat/",
+        "publisher": "Museu Picasso",
+        "tier": "C",
+        "retrievedAt": "2026-08-29T09:00:00.000+02:00"
+      }
+    ],
+    "verified": {
+      "price": false,
+      "schedule": false,
+      "dates": false,
+      "location": true,
+      "method": "catalogo-manual"
+    },
+    "planonmap": {
+      "dedupeKey": "museupicasso|2026-08-29|41.39|2.18",
+      "mergeHint": "new"
+    }
+  }
+}

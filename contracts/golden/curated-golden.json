@@ -1,0 +1,376 @@
+[
+  {
+    "id": "curated|museums|museu-picasso",
+    "source": "curated",
+    "contentLang": "es",
+    "sourceId": "museu-picasso",
+    "sourceUrl": "https://www.museupicasso.bcn.cat/",
+    "officialUrl": "https://www.museupicasso.bcn.cat/",
+    "ticketsUrl": "https://www.museupicasso.bcn.cat/es/entradas",
+    "title": "Museu Picasso",
+    "description": "Cinco palacios góticos encadenados en la calle Montcada guardan la colección más completa de la juventud de Picasso: más de cuatro mil obras que van de los cuadernos de adolescencia a la serie de Las Meninas.",
+    "audience": "todos",
+    "startDate": "2026-08-31T00:00:00.000+02:00",
+    "endDate": "2027-08-31T00:00:00.000+02:00",
+    "schedule": [
+      {
+        "days": "Martes a domingo",
+        "hours": "de 10.00 h a 19.00 h"
+      },
+      {
+        "days": "Jueves",
+        "hours": "de 10.00 h a 21.30 h"
+      },
+      {
+        "days": "Lunes",
+        "hours": "cerrado"
+      }
+    ],
+    "venue": {
+      "name": "Museu Picasso",
+      "address": "Carrer de Montcada, 15-23, 08003 Barcelona",
+      "lat": 41.385228,
+      "lng": 2.180968,
+      "neighborhood": "Sant Pere, Santa Caterina i la Ribera",
+      "district": "Ciutat Vella",
+      "municipality": "barcelona",
+      "zipCode": "08003",
+      "locationPrecision": "exact"
+    },
+    "category": "museums",
+    "price": {
+      "type": "paid",
+      "amount": 15,
+      "currency": "EUR"
+    },
+    "tags": [
+      "museo",
+      "arte",
+      "picasso",
+      "ciutat-vella"
+    ],
+    "i18n": {
+      "title": {
+        "es": "Museu Picasso",
+        "en": "Museu Picasso"
+      },
+      "description": {
+        "es": "Cinco palacios góticos encadenados en la calle Montcada guardan la colección más completa de la juventud de Picasso.",
+        "en": "Five linked Gothic palaces on Carrer Montcada hold the most complete collection of Picasso's early years."
+      }
+    },
+    "curated": {
+      "collection": "museums",
+      "slug": "museu-picasso",
+      "schemaVersion": 1,
+      "curatedAt": "2026-08-31T02:12:44.001+02:00",
+      "promptVersion": "write-v1",
+      "score": 91,
+      "temporality": "atemporal",
+      "consensus": {
+        "sourceCount": 2,
+        "sources": [
+          "visit-barcelona",
+          "bcn-cultura"
+        ]
+      },
+      "whyWorthIt": {
+        "es": "La mejor colección del mundo del Picasso que aún estaba aprendiendo a ser Picasso.",
+        "en": "The world's best collection of Picasso before he became Picasso."
+      },
+      "practical": {
+        "durationMinutes": 105,
+        "booking": "recomendada",
+        "bookingLeadDays": 2,
+        "activityLang": [
+          "sin-idioma"
+        ],
+        "transit": {
+          "es": "Metro Jaume I (L4), a 350 m. Buses V15 y 120 en Via Laietana.",
+          "en": "Jaume I metro (L4), 350 m away. Buses V15 and 120 on Via Laietana."
+        },
+        "priceIncludes": {
+          "es": "Colección permanente y exposición temporal. Audioguía aparte.",
+          "en": "Permanent collection and temporary exhibition. Audio guide sold separately."
+        }
+      },
+      "museum": {
+        "openingHours": [
+          {
+            "days": "Martes a domingo",
+            "hours": "10:00–19:00"
+          },
+          {
+            "days": "Jueves",
+            "hours": "10:00–21:30"
+          },
+          {
+            "days": "Lunes",
+            "hours": "cerrado"
+          }
+        ],
+        "freeAdmission": [
+          "Jueves de 16:00 a 19:00 (colección permanente)",
+          "Primer domingo de mes, todo el día",
+          "Menores de 18 años, siempre"
+        ],
+        "currentExhibition": {
+          "title": "Picasso i el circ",
+          "endsOn": "2027-01-18"
+        },
+        "visitMinutes": 105,
+        "bookAhead": true
+      },
+      "provenance": [
+        {
+          "url": "https://www.museupicasso.bcn.cat/es/horarios-y-precios",
+          "publisher": "Museu Picasso de Barcelona",
+          "tier": "C",
+          "retrievedAt": "2026-08-31T02:04:19.882+02:00"
+        },
+        {
+          "url": "https://www.barcelonaturisme.com/wv3/es/page/62/museu-picasso.html",
+          "publisher": "Barcelona Turisme",
+          "tier": "B",
+          "retrievedAt": "2026-08-31T02:05:02.117+02:00"
+        }
+      ],
+      "verified": {
+        "price": true,
+        "schedule": true,
+        "dates": true,
+        "location": true,
+        "method": "evidence-substring"
+      },
+      "planonmap": {
+        "dedupeKey": "museupicasso|2026-08-31|41.39|2.18",
+        "mergeHint": "new"
+      }
+    }
+  },
+  {
+    "id": "curated|shows|el-rei-lear-lliure-2026",
+    "source": "curated",
+    "contentLang": "es",
+    "sourceId": "el-rei-lear-lliure-2026",
+    "sourceUrl": "https://www.teatrelliure.com/es/el-rei-lear",
+    "officialUrl": "https://www.teatrelliure.com/es/el-rei-lear",
+    "ticketsUrl": "https://www.teatrelliure.com/es/el-rei-lear/entrades",
+    "title": "El rei Lear en el Teatre Lliure",
+    "description": "Montaje de la tragedia de Shakespeare en la sala grande del Lliure, en catalán y con sobretítulos en inglés y castellano.",
+    "startDate": "2026-10-08T20:00:00.000+02:00",
+    "endDate": "2026-11-02T21:45:00.000+01:00",
+    "schedule": [
+      {
+        "days": "Miércoles a sábado",
+        "hours": "20:00"
+      },
+      {
+        "days": "Domingo",
+        "hours": "18:00"
+      }
+    ],
+    "venue": {
+      "name": "Teatre Lliure — Sala Fabià Puigserver",
+      "address": "Plaça de Margarida Xirgu, 1, 08004 Barcelona",
+      "lat": 41.3721,
+      "lng": 2.1531,
+      "neighborhood": "El Poble-sec",
+      "district": "Sants-Montjuïc",
+      "municipality": "barcelona",
+      "locationPrecision": "exact"
+    },
+    "category": "arts",
+    "price": {
+      "type": "paid",
+      "amount": 20,
+      "amountMax": 32,
+      "currency": "EUR"
+    },
+    "tags": [
+      "teatro",
+      "shakespeare",
+      "poble-sec"
+    ],
+    "i18n": {
+      "title": {
+        "es": "El rei Lear en el Teatre Lliure",
+        "en": "King Lear at Teatre Lliure"
+      },
+      "description": {
+        "es": "Montaje de la tragedia de Shakespeare en la sala grande del Lliure, en catalán y con sobretítulos.",
+        "en": "Shakespeare's tragedy staged in the Lliure's main hall, in Catalan with surtitles."
+      }
+    },
+    "curated": {
+      "collection": "shows",
+      "slug": "el-rei-lear-lliure-2026",
+      "schemaVersion": 1,
+      "curatedAt": "2026-09-03T02:47:02.551+02:00",
+      "promptVersion": "write-v1",
+      "score": 74,
+      "temporality": "temporada",
+      "consensus": {
+        "sourceCount": 2,
+        "sources": [
+          "teatre-barcelona",
+          "timeout-bcn"
+        ]
+      },
+      "whyWorthIt": {
+        "es": "Shakespeare en catalán con sobretítulos en inglés, en la sala pública más ambiciosa de la ciudad.",
+        "en": "Shakespeare in Catalan with English surtitles, in the city's most ambitious public theatre."
+      },
+      "practical": {
+        "durationMinutes": 165,
+        "booking": "obligatoria",
+        "bookingLeadDays": 5,
+        "activityLang": [
+          "ca"
+        ],
+        "transit": {
+          "es": "Metro Poble Sec (L3), a 400 m.",
+          "en": "Poble Sec metro (L3), 400 m away."
+        }
+      },
+      "show": {
+        "artistOrCompany": "Companyia del Teatre Lliure",
+        "room": "Sala Fabià Puigserver",
+        "surtitles": [
+          "en",
+          "es"
+        ]
+      },
+      "provenance": [
+        {
+          "url": "https://www.teatrebarcelona.com/es/obra/el-rei-lear",
+          "publisher": "Teatre Barcelona",
+          "tier": "B",
+          "retrievedAt": "2026-09-03T02:33:10.004+02:00"
+        }
+      ],
+      "verified": {
+        "price": true,
+        "schedule": true,
+        "dates": true,
+        "location": true,
+        "method": "evidence-substring"
+      },
+      "planonmap": {
+        "dedupeKey": "elreilearenelteatrelliure|2026-10-08|41.37|2.15",
+        "mergeHint": "merge"
+      }
+    }
+  },
+  {
+    "id": "curated|plans|sagrada-familia-torres",
+    "source": "curated",
+    "contentLang": "es",
+    "sourceId": "sagrada-familia-torres",
+    "sourceUrl": "https://sagradafamilia.org/",
+    "officialUrl": "https://sagradafamilia.org/",
+    "ticketsUrl": "https://sagradafamilia.org/entradas",
+    "title": "Sagrada Família con subida a las torres",
+    "description": "Visita a la basílica de Gaudí con subida en ascensor a una de las torres y bajada a pie por la escalera de caracol.",
+    "audience": "todos",
+    "startDate": "2026-09-03T00:00:00.000+02:00",
+    "endDate": "2027-09-03T00:00:00.000+02:00",
+    "venue": {
+      "name": "Basílica de la Sagrada Família",
+      "address": "Carrer de Mallorca, 401, 08013 Barcelona",
+      "lat": 41.4036,
+      "lng": 2.1744,
+      "neighborhood": "La Sagrada Família",
+      "district": "Eixample",
+      "municipality": "barcelona",
+      "locationPrecision": "exact"
+    },
+    "category": "culture",
+    "categories": [
+      "culture",
+      "museums"
+    ],
+    "price": {
+      "type": "paid",
+      "amount": 36,
+      "currency": "EUR"
+    },
+    "tags": [
+      "gaudi",
+      "modernismo",
+      "eixample"
+    ],
+    "i18n": {
+      "title": {
+        "es": "Sagrada Família con subida a las torres",
+        "en": "Sagrada Família with tower access"
+      },
+      "description": {
+        "es": "Visita a la basílica de Gaudí con subida en ascensor a una de las torres.",
+        "en": "A visit to Gaudí's basilica with lift access up one of the towers."
+      }
+    },
+    "curated": {
+      "collection": "plans",
+      "slug": "sagrada-familia-torres",
+      "schemaVersion": 1,
+      "curatedAt": "2026-09-03T02:47:02.551+02:00",
+      "promptVersion": "write-v1",
+      "score": 96,
+      "temporality": "atemporal",
+      "consensus": {
+        "sourceCount": 3,
+        "sources": [
+          "timeout-bcn",
+          "visit-barcelona",
+          "bcn-cultura"
+        ]
+      },
+      "whyWorthIt": {
+        "es": "El interior es el motivo real de la visita: la luz de las vidrieras no se parece a nada.",
+        "en": "The interior is the actual reason to go: the stained-glass light is like nothing else."
+      },
+      "practical": {
+        "durationMinutes": 90,
+        "booking": "obligatoria",
+        "bookingLeadDays": 7,
+        "activityLang": [
+          "sin-idioma"
+        ],
+        "transit": {
+          "es": "Metro Sagrada Família (L2 y L5), a 100 m.",
+          "en": "Sagrada Família metro (L2 and L5), 100 m away."
+        },
+        "priceIncludes": {
+          "es": "Basílica, audioguía y ascensor a una torre. La bajada es a pie.",
+          "en": "Basilica, audio guide and lift up one tower. You walk back down."
+        }
+      },
+      "provenance": [
+        {
+          "url": "https://www.timeout.es/barcelona/es/atracciones/sagrada-familia",
+          "publisher": "Time Out Barcelona",
+          "tier": "A",
+          "retrievedAt": "2026-09-03T02:31:00.000+02:00"
+        },
+        {
+          "url": "https://sagradafamilia.org/horarios-y-precios",
+          "publisher": "Basílica de la Sagrada Família",
+          "tier": "C",
+          "retrievedAt": "2026-09-03T02:32:10.000+02:00"
+        }
+      ],
+      "verified": {
+        "price": true,
+        "schedule": false,
+        "dates": true,
+        "location": true,
+        "method": "evidence-substring"
+      },
+      "planonmap": {
+        "dedupeKey": "sagradafamiliaconsubidaalastorres|2026-09-03|41.40|2.17",
+        "mergeHint": "new"
+      }
+    }
+  }
+]

@@ -1,0 +1,6 @@
+# El propietario revisa TODO (§3.4).
+#
+# Junto con la protección de la rama `main` (requiere PR y revisión), esto es lo
+# que garantiza que main solo contenga lo que una persona ha aprobado: un tercero
+# puede proponer, no publicar (§11.2).
+*       @Oriol-1

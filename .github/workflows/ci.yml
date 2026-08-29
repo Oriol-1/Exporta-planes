@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      # ── preparación (igual que en curate.yml) ──
+      - uses: actions/checkout@v5
+        with: { fetch-depth: 0 }
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v5
+        with: { node-version: 24, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test:run
+      - run: pnpm test:contract # el fixture dorado sigue validando
+      - run: pnpm validate # config/ y content/ contra sus esquemas
+
+      # Puerta del §5.7: tocar un prompt sin evaluarlo está prohibido.
+      - name: Un prompt cambiado exige su informe de evaluación
+        run: |
+          BASE="${{ github.event.pull_request.base.sha || github.event.before }}"
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            echo "Sin base con la que comparar; se omite."; exit 0
+          fi
+          CAMBIADOS="$(git diff --name-only "$BASE" HEAD)"
+          if echo "$CAMBIADOS" | grep -qE '^src/(screen/llmScreen|enrich/write)\.ts$'; then
+            if ! echo "$CAMBIADOS" | grep -qE '^evals/'; then
+              echo "::error::Has tocado un prompt sin actualizar evals/. Ejecuta pnpm eval:screen."
+              exit 1
+            fi
+          fi
+
+      # Escaneo propio de secretos, además del automático de GitHub (§11.3).
+      - name: Nada con forma de clave de API en el diff
+        run: |
+          BASE="${{ github.event.pull_request.base.sha || github.event.before }}"
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            echo "Sin base con la que comparar; se omite."; exit 0
+          fi
+          if git diff "$BASE" HEAD | grep -nE '^\+.*(sk-ant-[A-Za-z0-9_-]{20,}|sk-[A-Za-z0-9]{32,}|ghp_[A-Za-z0-9]{36})'; then
+            echo "::error::El diff contiene algo con forma de clave de API."
+            exit 1
+          fi

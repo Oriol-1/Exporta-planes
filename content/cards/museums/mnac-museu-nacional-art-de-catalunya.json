@@ -1,0 +1,95 @@
+{
+  "id": "curated|museums|mnac-museu-nacional-art-de-catalunya",
+  "source": "curated",
+  "contentLang": "es",
+  "sourceId": "mnac-museu-nacional-art-de-catalunya",
+  "sourceUrl": "https://www.museunacional.cat/",
+  "officialUrl": "https://www.museunacional.cat/",
+  "title": "MNAC · Museu Nacional d’Art de Catalunya",
+  "description": "Ocupa el Palau Nacional, el edificio monumental que preside Montjuïc desde la Exposición de 1929, y guarda mil años de arte catalán. Lo que casi nadie espera es la sala de románico: pinturas murales arrancadas de iglesias del Pirineo y montadas de nuevo sobre réplicas de sus ábsides, de modo que se ven como se veían. Después llegan el gótico, el Renacimiento, Gaudí y el modernismo, y una colección de fotografía que suele pasar desapercibida. La escalinata de entrada es, por sí sola, uno de los mejores miradores de la ciudad, y está abierta a cualquiera.",
+  "audience": "todos",
+  "startDate": "2026-08-29T00:00:00.000+02:00",
+  "endDate": "2027-08-29T00:00:00.000+02:00",
+  "venue": {
+    "name": "MNAC · Museu Nacional d’Art de Catalunya",
+    "address": "Parc de Montjuïc, s/n, 08038 Barcelona",
+    "lat": 41.368333,
+    "lng": 2.153611,
+    "neighborhood": "El Poble-sec",
+    "district": "Sants-Montjuïc",
+    "municipality": "barcelona",
+    "zipCode": "08038",
+    "locationPrecision": "exact"
+  },
+  "category": "museums",
+  "price": {
+    "type": "unknown"
+  },
+  "tags": [
+    "museums",
+    "arte",
+    "romanico",
+    "sants-montjuic"
+  ],
+  "i18n": {
+    "title": {
+      "es": "MNAC · Museu Nacional d’Art de Catalunya",
+      "en": "MNAC · National Art Museum of Catalonia"
+    },
+    "description": {
+      "es": "Ocupa el Palau Nacional, el edificio monumental que preside Montjuïc desde la Exposición de 1929, y guarda mil años de arte catalán. Lo que casi nadie espera es la sala de románico: pinturas murales arrancadas de iglesias del Pirineo y montadas de nuevo sobre réplicas de sus ábsides, de modo que se ven como se veían. Después llegan el gótico, el Renacimiento, Gaudí y el modernismo, y una colección de fotografía que suele pasar desapercibida. La escalinata de entrada es, por sí sola, uno de los mejores miradores de la ciudad, y está abierta a cualquiera.",
+      "en": "It occupies the Palau Nacional, the monumental building that has presided over Montjuïc since the 1929 exhibition, and it holds a thousand years of Catalan art. What almost nobody expects is the Romanesque hall: wall paintings lifted from Pyrenean churches and remounted on replicas of their apses, so you see them as they were meant to be seen. Then come the Gothic rooms, the Renaissance, Gaudí and the modernists, and a photography collection that tends to go unnoticed. The entrance staircase is, on its own, one of the best viewpoints in the city, and it is open to anyone."
+    }
+  },
+  "curated": {
+    "collection": "museums",
+    "slug": "mnac-museu-nacional-art-de-catalunya",
+    "schemaVersion": 1,
+    "curatedAt": "2026-08-29T09:00:00.000+02:00",
+    "promptVersion": "manual-v1",
+    "score": 93,
+    "temporality": "atemporal",
+    "consensus": {
+      "sourceCount": 1,
+      "sources": [
+        "venue-official"
+      ]
+    },
+    "whyWorthIt": {
+      "es": "Las pinturas románicas del Pirineo, remontadas sobre sus ábsides, no se ven así en ningún otro sitio.",
+      "en": "Pyrenean Romanesque wall paintings, remounted on their apses, are not shown like this anywhere else."
+    },
+    "practical": {
+      "booking": "recomendada",
+      "activityLang": [
+        "sin-idioma"
+      ],
+      "transit": {
+        "es": "Metro Espanya (L1, L3 y L8), y unos 700 m de subida por la escalinata.",
+        "en": "Espanya metro (L1, L3, L8), then a 700 m climb up the staircase."
+      }
+    },
+    "museum": {
+      "visitMinutes": 150
+    },
+    "provenance": [
+      {
+        "url": "https://www.museunacional.cat/",
+        "publisher": "MNAC · Museu Nacional d’Art de Catalunya",
+        "tier": "C",
+        "retrievedAt": "2026-08-29T09:00:00.000+02:00"
+      }
+    ],
+    "verified": {
+      "price": false,
+      "schedule": false,
+      "dates": false,
+      "location": true,
+      "method": "catalogo-manual"
+    },
+    "planonmap": {
+      "dedupeKey": "mnacmuseunacionaldartdecatalunya|2026-08-29|41.37|2.15",
+      "mergeHint": "new"
+    }
+  }
+}

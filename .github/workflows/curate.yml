@@ -1,0 +1,134 @@
+name: Curate
+
+# El ÚNICO workflow que gasta dinero y el único que propone cambios (§3.6).
+#
+# Tiene DOS FASES (§7.2 ter): la de las 02:30 rastrea, criba y envía el lote de
+# redacción; las de las 06:30, 10:30 y 14:30 intentan recogerlo. La fase se
+# deduce del cron, así que no hay dos workflows que mantener sincronizados.
+#
+# Las 02:30 UTC están elegidas a propósito: media hora antes del refresco de
+# planonmap (03:00 UTC), para que el dato curado ya esté publicado y fresco
+# cuando planonmap venga a por él.
+
+on:
+  schedule:
+    - cron: '30 2 * * *' # submit  · diario → planes y espectáculos
+    - cron: '0 2 * * 1' # submit  · lunes  → museos
+    - cron: '30 6,10,14 * * *' # collect · tres intentos de recogida
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: Fase a ejecutar
+        type: choice
+        options: ['submit', 'collect']
+        default: 'submit'
+      collection:
+        description: Colecciones a procesar (solo en submit)
+        type: choice
+        options: ['plans,shows', 'museums', 'plans,shows,museums']
+        default: 'plans,shows'
+      limit:
+        description: Máximo de fichas a escribir (0 = sin límite)
+        type: string
+        default: '0'
+      dryRun:
+        description: No llamar a ningún modelo
+        type: boolean
+        default: false
+
+permissions:
+  contents: write # escribe la rama de propuesta
+  pull-requests: write # abre o actualiza el PR
+  issues: write # incidencias de fuente rota y de presupuesto
+
+# EL MISMO grupo que reconcile.yml: nunca dos escrituras a la vez (§3.6)
+concurrency:
+  group: bcn-curator-write
+  cancel-in-progress: false
+
+jobs:
+  curate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # reconcile compara ramas; necesita historial
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Deducir fase y colección del disparador
+        id: cfg
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "phase=${{ inputs.phase }}"           >> "$GITHUB_OUTPUT"
+            echo "collection=${{ inputs.collection }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "30 6,10,14 * * *" ]; then
+            echo "phase=collect"    >> "$GITHUB_OUTPUT"
+            echo "collection="      >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 2 * * 1" ]; then
+            echo "phase=submit"     >> "$GITHUB_OUTPUT"
+            echo "collection=museums" >> "$GITHUB_OUTPUT"
+          else
+            echo "phase=submit"     >> "$GITHUB_OUTPUT"
+            echo "collection=plans,shows" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Ahorra una ejecución entera cuando no hay nada que recoger: sin esto,
+      # las tres recogidas diarias instalarían dependencias para nada.
+      - name: ¿Hay algo pendiente que recoger?
+        id: pend
+        if: steps.cfg.outputs.phase == 'collect'
+        run: |
+          if [ -s .cache/pending-batches.json ] && [ "$(jq 'length' .cache/pending-batches.json)" != "0" ]; then
+            echo "hay=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "hay=false" >> "$GITHUB_OUTPUT"
+            echo "Nada pendiente. Salida limpia." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Curar
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          AI_MONTHLY_BUDGET_EUR: ${{ vars.AI_MONTHLY_BUDGET_EUR || '5' }}
+          SCREEN_MODEL: ${{ vars.SCREEN_MODEL || 'gpt-5-mini' }}
+          WRITER_MODEL: ${{ vars.WRITER_MODEL || 'claude-opus-5' }}
+          CRAWLER_USER_AGENT: ${{ vars.CRAWLER_USER_AGENT }}
+          CRAWLER_CONTACT_EMAIL: ${{ secrets.CRAWLER_CONTACT_EMAIL }}
+        if: steps.cfg.outputs.phase == 'submit' || steps.pend.outputs.hay == 'true'
+        run: |
+          pnpm curate \
+            --phase "${{ steps.cfg.outputs.phase }}" \
+            --collection "${{ steps.cfg.outputs.collection }}" \
+            --limit "${{ inputs.limit || '0' }}" \
+            ${{ inputs.dryRun == true && '--dry-run' || '' }}
+
+      # El resumen se lee en la pestaña del workflow, no ocupa sitio en el repo
+      - name: Resumen de la ejecución
+        if: always()
+        run: |
+          if [ -f .cache/last-run-summary.md ]; then
+            cat .cache/last-run-summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      # El PR solo se abre cuando hay fichas escritas, es decir, tras recoger.
+      - name: Abrir o actualizar el PR de propuesta
+        if: ${{ inputs.dryRun != true && steps.cfg.outputs.phase == 'collect' && steps.pend.outputs.hay == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: pnpm review:pr
+
+      # En 'submit' solo se guarda el identificador del lote pendiente.
+      - name: Guardar el lote pendiente en la rama de propuesta
+        if: ${{ inputs.dryRun != true && steps.cfg.outputs.phase == 'submit' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: pnpm review:pr --only-state

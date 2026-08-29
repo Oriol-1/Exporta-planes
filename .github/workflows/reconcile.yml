@@ -1,0 +1,43 @@
+name: Reconcile
+
+# Convierte «esta ficha no está en el merge» en un veto registrado (§10.1).
+#
+# NOTA DE SEGURIDAD: el disparador es `pull_request`, NUNCA `pull_request_target`.
+# Es la diferencia entre un workflow seguro y uno que filtra secretos:
+# `pull_request` desde un fork corre con permisos de solo lectura y sin acceso a
+# los secretos. La condición del `if` lo remata exigiendo además que la rama sea
+# del propio repositorio (§11.2).
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bcn-curator-write # el MISMO que curate.yml
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    # Solo los PR de propuesta, y solo del propio repositorio.
+    if: >-
+      contains(github.event.pull_request.labels.*.name, 'propuesta') &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      # ── preparación (igual que en curate.yml) ──
+      - uses: actions/checkout@v5
+        with: { ref: main, fetch-depth: 0 }
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v5
+        with: { node-version: 24, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Manifiesto contra lo publicado → vetos
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_MERGED: ${{ github.event.pull_request.merged }}
+        run: pnpm review:reconcile

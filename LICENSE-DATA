@@ -1,0 +1,41 @@
+# Licencia de los datos publicados
+
+Los tres archivos JSON publicados en `/v1/` —`plans.json`, `shows.json` y
+`museums.json`— se distribuyen bajo
+
+    Creative Commons Reconocimiento 4.0 Internacional (CC BY 4.0)
+    https://creativecommons.org/licenses/by/4.0/deed.es
+
+Eres libre de compartirlos y adaptarlos, incluso comercialmente, citando la
+fuente.
+
+## Por qué se pueden licenciar
+
+Los TEXTOS de cada ficha son originales: se escriben de cero para este proyecto
+y una comprobación mecánica de solapamiento de 8-gramas verifica que no
+reproducen la expresión de ninguna fuente (§6.1 del plan).
+
+Los HECHOS —fechas, precios, direcciones, horarios— no son licenciables por
+nadie, ni por nosotros ni por las webs de las que se extraen: son datos, no
+obras.
+
+## Atribución de origen
+
+Cada ficha publica su bloque `curated.provenance[]` con las URL consultadas, su
+editor y la fecha de recuperación. No es una obligación legal cuando solo se usan
+hechos, pero es buena fe, es útil para el lector y hace el sistema auditable.
+
+## Imágenes
+
+Este proyecto **no publica imágenes de terceros** (§12.2). Cuando el campo
+`image` viene relleno, la imagen procede de una de estas tres vías y su licencia
+concreta viaja en `imageCredit`:
+
+1. Wikimedia Commons con licencia libre verificada contra su API (dominio
+   público, CC0, CC BY o CC BY-SA).
+2. Imagen del propio recinto público, cuando el recinto es una institución
+   pública y su dominio está en la lista de hosts renderizables del consumidor.
+3. Fotografía propia del propietario del proyecto.
+
+Nunca fotos de medios, bancos de imágenes ni capturas de pantalla. La licencia
+CC BY 4.0 de arriba cubre los datos y los textos; **cada imagen conserva la suya**.

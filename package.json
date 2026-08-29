@@ -1,0 +1,45 @@
+{
+  "name": "bcn-curator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.26.1",
+  "engines": { "node": "24.x" },
+  "scripts": {
+    "curate": "tsx src/cli/curate.ts",
+    "publish:build": "tsx src/cli/publishBuild.ts",
+    "review:pr": "tsx src/cli/reviewPr.ts",
+    "review:reconcile": "tsx src/cli/reconcile.ts",
+    "validate": "tsx src/cli/validate.ts",
+    "eval:screen": "tsx src/cli/evalScreen.ts",
+    "eval:write": "tsx src/cli/evalWrite.ts",
+    "report:health": "tsx src/cli/reportHealth.ts",
+    "report:metrics": "tsx src/cli/reportMetrics.ts",
+    "spend": "tsx src/cli/spend.ts",
+    "veto": "tsx src/cli/veto.ts",
+    "archive": "tsx src/cli/archive.ts",
+    "sources:check": "tsx src/cli/sourcesCheck.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:contract": "vitest run tests/integration/contract.test.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.122.0",
+    "openai": "7.8.0",
+    "zod": "4.4.1",
+    "cheerio": "1.2.0",
+    "fast-xml-parser": "5.11.1",
+    "robots-parser": "3.0.1",
+    "p-limit": "7.3.1"
+  },
+  "devDependencies": {
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.5",
+    "eslint": "9.39.5",
+    "typescript-eslint": "8.55.0",
+    "@types/node": "24.10.1"
+  }
+}
