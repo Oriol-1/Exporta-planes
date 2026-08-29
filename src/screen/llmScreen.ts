@@ -165,6 +165,39 @@ export interface ScreenOutcome {
   readonly eur: number
   readonly missing: readonly string[]
   readonly skippedForBudget: boolean
+  /** Qué dijo el proveedor cuando falló. `undefined` si no falló. */
+  readonly providerError?: string | undefined
+  /**
+   * `true` cuando reintentar es inútil: sin saldo, clave inválida o sin permiso
+   * sobre el modelo. Con un fallo así NO se reintenta candidato a candidato —
+   * serían N llamadas fallidas más para nada.
+   */
+  readonly providerDown?: boolean | undefined
+}
+
+/**
+ * ¿Reintentar tiene sentido, o el proveedor está fuera de juego?
+ *
+ * `insufficient_quota` (sin saldo), 401 (clave inválida) y 403 (sin permiso
+ * sobre el modelo) NO se arreglan reintentando. Un 429 de ritmo, un 500 o un
+ * corte de red, sí. Distinguirlos evita convertir un fallo en cincuenta.
+ */
+export function isProviderDown(error: unknown): boolean {
+  const e = error as { status?: number; code?: string; type?: string }
+  if (e?.type === 'insufficient_quota') return true
+  if (e?.code === 'credit_balance_exhausted' || e?.code === 'invalid_api_key') return true
+  return e?.status === 401 || e?.status === 403
+}
+
+function describeError(error: unknown): string {
+  const e = error as { status?: number; message?: string; code?: string }
+  const message = e?.message ?? String(error)
+  // El SDK ya mete el código de estado al principio del mensaje: repetirlo
+  // produce «429 429 You have no credits…», que se lee fatal en el informe.
+  const status = e?.status !== undefined && !message.startsWith(String(e.status))
+    ? `${e.status} `
+    : ''
+  return `${status}${message}${e?.code ? ` (${e.code})` : ''}`.trim()
 }
 
 function parseResults(raw: string): ScreenVerdict[] {
@@ -204,15 +237,32 @@ export async function screenBatch(
     }
   }
 
-  const response = await openai().chat.completions.create({
-    model,
-    messages: [
-      { role: 'system', content: SCREEN_SYSTEM_PROMPT },
-      { role: 'user', content: userPrompt },
-    ],
-    response_format: { type: 'json_schema', json_schema: SCREEN_JSON_SCHEMA },
-    max_completion_tokens: budget.screenMaxOutputTokens,
-  })
+  // Una caída del proveedor NO puede tumbar la ejecución (§4.4, §7.7): el
+  // rastreo, el prefiltro, el consenso y la publicación tienen que seguir
+  // corriendo, y los candidatos sin cribar quedan pendientes para mañana.
+  let response
+  try {
+    response = await openai().chat.completions.create({
+      model,
+      messages: [
+        { role: 'system', content: SCREEN_SYSTEM_PROMPT },
+        { role: 'user', content: userPrompt },
+      ],
+      response_format: { type: 'json_schema', json_schema: SCREEN_JSON_SCHEMA },
+      max_completion_tokens: budget.screenMaxOutputTokens,
+    })
+  } catch (error) {
+    return {
+      verdicts: new Map(),
+      inputTokens: 0,
+      outputTokens: 0,
+      eur: 0,
+      missing: batch.map((c) => c.clusterId),
+      skippedForBudget: false,
+      providerError: describeError(error),
+      providerDown: isProviderDown(error),
+    }
+  }
 
   const content = response.choices[0]?.message.content ?? '{"results":[]}'
   const verdicts = new Map<string, ScreenVerdict>()
@@ -263,15 +313,31 @@ export async function screenAll(
   let outputTokens = 0
   let eur = 0
   let skippedForBudget = false
+  let providerError: string | undefined
+  let providerDown = false
   const missing: string[] = []
 
   for (const batch of chunk(shuffleForBatching(clusters), budget.screenBatchSize)) {
+    // El proveedor ya se ha declarado fuera de juego: el resto de lotes se
+    // marcan pendientes sin gastar una sola llamada más.
+    if (providerDown) {
+      missing.push(...batch.map((c) => c.clusterId))
+      continue
+    }
+
     const outcome = await screenBatch(batch, budget, guard, now)
     for (const [id, v] of outcome.verdicts) verdicts.set(id, v)
     inputTokens += outcome.inputTokens
     outputTokens += outcome.outputTokens
     eur += outcome.eur
     skippedForBudget = skippedForBudget || outcome.skippedForBudget
+    if (outcome.providerError && !providerError) providerError = outcome.providerError
+    if (outcome.providerDown) providerDown = true
+
+    if (providerDown || outcome.skippedForBudget) {
+      missing.push(...outcome.missing)
+      continue
+    }
 
     for (const id of outcome.missing) {
       const single = clusters.find((c) => c.clusterId === id)
@@ -281,9 +347,20 @@ export async function screenAll(
       inputTokens += retry.inputTokens
       outputTokens += retry.outputTokens
       eur += retry.eur
+      if (retry.providerError && !providerError) providerError = retry.providerError
+      if (retry.providerDown) providerDown = true
       if (!retry.verdicts.has(id)) missing.push(id)
     }
   }
 
-  return { verdicts, inputTokens, outputTokens, eur, missing, skippedForBudget }
+  return {
+    verdicts,
+    inputTokens,
+    outputTokens,
+    eur,
+    missing,
+    skippedForBudget,
+    providerError,
+    providerDown,
+  }
 }

@@ -180,6 +180,14 @@ export async function runSubmit(opts: SubmitOptions): Promise<SubmitResultReport
   if (screened.skippedForBudget) {
     warnings.push('presupuesto agotado durante el cribado: los candidatos quedan en cola')
   }
+  if (screened.providerError) {
+    // Modo degradado del §7.7: se sigue publicando lo ya escrito, y lo que
+    // necesitaba cribado vuelve a la cola de mañana. No se rompe nada.
+    warnings.push(
+      `el proveedor de cribado falló${screened.providerDown ? ' y no admite reintento' : ''}: ` +
+        `${screened.providerError}. Se sigue publicando lo ya escrito.`,
+    )
+  }
   if (screened.missing.length > 0) {
     warnings.push(`el modelo no devolvió veredicto para ${screened.missing.length} candidatos`)
   }
