@@ -30,20 +30,14 @@ jobs:
       - run: pnpm test:contract # el fixture dorado sigue validando
       - run: pnpm validate # config/ y content/ contra sus esquemas
 
-      # Puerta del §5.7: tocar un prompt sin evaluarlo está prohibido.
+      # Puerta del §5.7: cambiar un prompt sin evaluarlo está prohibido.
+      #
+      # Compara el CONTENIDO de los prompts, no si el archivo se tocó: los
+      # mismos archivos contienen el prompt y el manejo de errores de red, y
+      # hacer fallar la CI por arreglar un reintento solo enseña a saltarse el
+      # guardián.
       - name: Un prompt cambiado exige su informe de evaluación
-        run: |
-          BASE="${{ github.event.pull_request.base.sha || github.event.before }}"
-          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
-            echo "Sin base con la que comparar; se omite."; exit 0
-          fi
-          CAMBIADOS="$(git diff --name-only "$BASE" HEAD)"
-          if echo "$CAMBIADOS" | grep -qE '^src/(screen/llmScreen|enrich/write)\.ts$'; then
-            if ! echo "$CAMBIADOS" | grep -qE '^evals/'; then
-              echo "::error::Has tocado un prompt sin actualizar evals/. Ejecuta pnpm eval:screen."
-              exit 1
-            fi
-          fi
+        run: pnpm prompts:check --base "${{ github.event.pull_request.base.sha || github.event.before }}"
 
       # Escaneo propio de secretos, además del automático de GitHub (§11.3).
       - name: Nada con forma de clave de API en el diff

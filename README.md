@@ -119,6 +119,7 @@ que compartían el 90 % del código y podían divergir.
 | `pnpm veto <slug> "<motivo>"` | Veta una ficha y la retira | No |
 | `pnpm archive <slug>` | Retira sin vetar: puede volver | No |
 | `pnpm sources:check` | Recomprueba `robots.txt` y `verifiedAt` | No |
+| `pnpm prompts:check --base <ref>` | ¿Ha cambiado algún prompt desde `<ref>`? Es la puerta del §5.7 | No |
 
 **`--dry-run` es el comando más importante de la lista**: permite tocar prompts,
 umbrales y adaptadores durante horas sin gastar un céntimo.
@@ -260,7 +261,14 @@ Tres, todas menores y deliberadas:
    contrato de cada módulo, no cómo se cosen. Coserlos dentro de un CLI habría
    hecho `curate.ts` inmanejable; `crawl/`, `normalize/` y `cluster/` siguen sin
    conocerse entre sí.
-3. **`evals/write/golden.jsonl` tiene 5 fichas, no 8.** Son las cinco escritas a
+3. **La puerta del §5.7 compara el CONTENIDO del prompt, no si el archivo se tocó.**
+   Tal y como estaba escrita en el anexo A.9 daba falsos positivos: `llmScreen.ts`
+   contiene el prompt *y* el manejo de errores de red, así que arreglar un
+   reintento hacía fallar la CI pidiendo una evaluación que no venía a cuento —
+   y eso solo enseña a saltarse el guardián. `pnpm prompts:check` extrae las
+   constantes de prompt en la base y en HEAD y compara sus huellas: no deja
+   pasar un cambio de prompt ni protesta por uno que no lo es.
+4. **`evals/write/golden.jsonl` tiene 5 fichas, no 8.** Son las cinco escritas a
    mano de la Fase 0: es lo que hay hasta que la Fase 1 produzca fichas
    aceptadas de verdad. Las comprobaciones mecánicas ya corren sobre ellas.
 
