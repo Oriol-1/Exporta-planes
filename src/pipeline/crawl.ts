@@ -15,6 +15,8 @@ import { toCandidate } from '../normalize/toCandidate'
 import { geocode } from '../normalize/geo'
 import { readIndex, writeIndex } from '../store/cache'
 import { madridDayString, addDays } from '../core/clock'
+import { MUSEUMS } from '../../config/museums'
+import type { MuseumSeed } from '../../config/schema'
 import { bytesHash } from '../core/hash'
 import type { RunObservation } from '../report/health'
 
@@ -36,6 +38,47 @@ export interface CrawlResult {
   readonly notModified: number
   readonly skipped: readonly string[]
   readonly notes: readonly string[]
+}
+
+/**
+ * Índice URL → museo del catálogo.
+ *
+ * Es lo que conecta `config/museums.ts` con el rastreo, y NO es un detalle: el
+ * §5.1 dice que «los museos entran porque están en config/museums.ts». El
+ * catálogo aporta lo que no se puede extraer con fiabilidad —el slug estable de
+ * por vida y unas coordenadas verificadas a mano—, y sin este índice una ficha
+ * de museo perdería su identidad en cada refresco y habría que geocodificarla a
+ * ciegas desde su dirección.
+ */
+const MUSEUM_BY_URL: ReadonlyMap<string, MuseumSeed> = (() => {
+  const map = new Map<string, MuseumSeed>()
+  for (const raw of MUSEUMS) {
+    if (raw.enabled === false) continue
+    const seed = {
+      ...raw,
+      municipality: raw.municipality ?? 'barcelona',
+      tags: raw.tags ?? [],
+      enabled: raw.enabled ?? true,
+    } as MuseumSeed
+    for (const url of [seed.hoursUrl, seed.officialUrl]) {
+      if (url) map.set(canonicalUrl(url), seed)
+    }
+  }
+  return map
+})()
+
+/** Misma URL con y sin barra final, y sin distinguir mayúsculas de host. */
+function canonicalUrl(url: string): string {
+  try {
+    const u = new URL(url)
+    return `${u.protocol}//${u.host.toLowerCase()}${u.pathname.replace(/\/$/, '')}`
+  } catch {
+    return url.replace(/\/$/, '')
+  }
+}
+
+export function museumSeedFor(url: string): MuseumSeed | undefined {
+  return MUSEUM_BY_URL.get(canonicalUrl(url))
 }
 
 /** Cuándo se rastreó esta fuente por última vez. Sin dato: los últimos 30 días. */
@@ -169,10 +212,17 @@ async function crawlSource(
     emptyRateSum += emptyFieldRate(extraction.extract)
     emptyRateCount++
 
+    // El catálogo manda sobre lo extraído: sus coordenadas están verificadas a
+    // mano y su slug es la identidad de la ficha de por vida (§4.9).
+    const seed = museumSeedFor(found.url)
+
     // Geocodificación solo si hace falta: una dirección se resuelve una vez en
     // la vida, y Nominatim es cortesía de la comunidad, no un derecho (§7.1).
+    // Un museo del catálogo NUNCA se geocodifica: ya trae sus coordenadas.
     let coords: { lat: number; lng: number } | undefined
-    if (extraction.extract.lat === undefined && extraction.extract.address) {
+    if (seed) {
+      coords = { lat: seed.lat, lng: seed.lng }
+    } else if (extraction.extract.lat === undefined && extraction.extract.address) {
       const point = await geocode(opts.fetcher, extraction.extract.address, opts.now)
       if (point) coords = { lat: point.lat, lng: point.lng }
     }
@@ -185,6 +235,21 @@ async function crawlSource(
       retrievedAt: outcome.fetchedAt,
       now: opts.now,
       coords,
+      ...(seed
+        ? {
+            seed: {
+              slug: seed.slug,
+              name: seed.name,
+              address: seed.address,
+              neighborhood: seed.neighborhood,
+              district: seed.district,
+              municipality: seed.municipality,
+              zipCode: seed.zipCode,
+              officialUrl: seed.officialUrl,
+              ticketsUrl: seed.ticketsUrl,
+            },
+          }
+        : {}),
     })
 
     index.set(found.url, {

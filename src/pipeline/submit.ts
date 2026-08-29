@@ -244,9 +244,14 @@ export async function runSubmit(opts: SubmitOptions): Promise<SubmitResultReport
       reason: r.reason,
     })
   }
-  for (const unmet of diversified.unmetMinimums) {
-    // El hueco se queda vacío: nunca se publica algo malo por rellenar una cuota.
-    warnings.push(`cuota sin cubrir, se deja vacía: ${unmet}`)
+  // Las cuotas solo tienen sentido si había candidatos a los que aplicárselas:
+  // avisar de «minGratuitos sin cubrir» en una ejecución de solo museos —que no
+  // pasan por cuotas— es ruido que entrena a ignorar los avisos.
+  if (rest.length > 0) {
+    for (const unmet of diversified.unmetMinimums) {
+      // El hueco se queda vacío: nunca se publica algo malo por rellenar una cuota.
+      warnings.push(`cuota sin cubrir, se deja vacía: ${unmet}`)
+    }
   }
 
   const museumLimit = opts.limit > 0 ? opts.limit : museumScored.length

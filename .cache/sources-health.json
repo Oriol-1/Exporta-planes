@@ -1,0 +1,25 @@
+{
+  "museus-bcn": {
+    "id": "museus-bcn",
+    "status": "ok",
+    "medianExtracted": 0,
+    "recentExtracted": [
+      0
+    ],
+    "emptyFieldRate": 0,
+    "consecutiveDegradedDays": 0,
+    "lastRunAt": "2026-08-29T20:57:46.771Z"
+  },
+  "venue-official": {
+    "id": "venue-official",
+    "status": "degraded",
+    "medianExtracted": 15,
+    "recentExtracted": [
+      15
+    ],
+    "emptyFieldRate": 0.5999999999999999,
+    "consecutiveDegradedDays": 1,
+    "lastRunAt": "2026-08-29T20:57:46.771Z",
+    "lastError": "fetch failed"
+  }
+}
