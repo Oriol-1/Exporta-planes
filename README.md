@@ -57,7 +57,7 @@ pnpm install
 cp .env.example .env.local        # rellenar solo si vas a gastar en IA
 
 pnpm validate                     # config/ y content/ contra sus esquemas
-pnpm test:run                     # 159 tests
+pnpm test:run                     # 183 tests
 pnpm publish:build                # genera dist/v1/ desde content/
 ```
 
