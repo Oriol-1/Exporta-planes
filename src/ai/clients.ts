@@ -21,11 +21,40 @@ export class MissingApiKeyError extends Error {
 let openaiClient: OpenAI | null = null
 let anthropicClient: Anthropic | null = null
 
+/**
+ * Endpoint alternativo compatible con OpenAI, si se ha configurado uno.
+ *
+ * Sirve para apuntar el cribado a un MODELO LOCAL (Ollama, LM Studio) o a
+ * cualquier proveedor compatible, en vez de a la API de OpenAI. Es la única vía
+ * legítima de no pagar por token: la suscripción de ChatGPT NO sirve para esto
+ * —cubre a una persona usando el chat, no a un programa desatendido— y GitHub
+ * Models está en proceso de retirada (devuelve 410).
+ *
+ * Con un modelo local se pierde criterio editorial, así que conviene medirlo con
+ * `pnpm eval:screen` antes de fiarse (§5.7).
+ */
+export function openAiBaseUrl(): string | undefined {
+  const raw = process.env['OPENAI_BASE_URL']?.trim()
+  return raw === undefined || raw === '' ? undefined : raw
+}
+
 export function openai(): OpenAI {
   if (openaiClient) return openaiClient
-  const apiKey = process.env['OPENAI_API_KEY']
+  const baseURL = openAiBaseUrl()
+
+  // Un servidor local no pide clave, pero el SDK exige que haya algo. Solo se
+  // permite ese hueco cuando hay un endpoint propio: contra la API de OpenAI la
+  // clave sigue siendo obligatoria.
+  const apiKey = process.env['OPENAI_API_KEY'] ?? (baseURL ? 'sin-clave-endpoint-local' : undefined)
   if (!apiKey) throw new MissingApiKeyError('openai', 'OPENAI_API_KEY')
-  openaiClient = new OpenAI({ apiKey, maxRetries: 2, timeout: 120_000 })
+
+  openaiClient = new OpenAI({
+    apiKey,
+    ...(baseURL ? { baseURL } : {}),
+    maxRetries: 2,
+    // Un modelo local en un portátil tarda mucho más que la API.
+    timeout: baseURL ? 600_000 : 120_000,
+  })
   return openaiClient
 }
 

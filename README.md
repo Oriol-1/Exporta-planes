@@ -70,7 +70,7 @@ Lo que `doctor` no hace, porque tarda más:
 
 ```bash
 pnpm validate                     # config/ y content/ contra sus esquemas
-pnpm test:run                     # 216 tests
+pnpm test:run                     # 225 tests
 pnpm publish:build                # genera dist/v1/ desde content/
 pnpm curate --dry-run             # el embudo entero, sin gastar un céntimo
 ```

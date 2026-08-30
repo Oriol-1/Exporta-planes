@@ -17,6 +17,7 @@ import { DIST_INDEX_FILE, GOLDEN_FIXTURE, ALL_COLLECTIONS } from '../store/paths
 import { madridMonthString } from '../core/clock'
 import { sha256 } from '../core/hash'
 import { gh } from '../review/git'
+import { openAiBaseUrl } from '../ai/clients'
 import { crawlContext } from './env'
 import { hasFlag, log, parseArgs } from './args'
 
@@ -135,6 +136,13 @@ async function main(): Promise<void> {
     tieneAnthropic && !esMarcador('ANTHROPIC_API_KEY') ? 'configurada' : 'sin configurar',
     tieneAnthropic ? undefined : 'con solo OpenAI, pon WRITER_MODEL=gpt-5 en .env.local',
   )
+
+  const endpoint = openAiBaseUrl()
+  if (endpoint) {
+    // Cambia el coste por completo, así que tiene que verse de un vistazo.
+    r.add('info', 'endpoint compatible', endpoint,
+      'no se llama a la API de OpenAI: mide la calidad con pnpm eval:screen')
+  }
 
   // ── 4 · EL PRODUCTO ───────────────────────────────────────────────────────
   r.seccion('4 · El producto (content/)')
