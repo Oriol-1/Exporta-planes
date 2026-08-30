@@ -12,6 +12,7 @@ import type { ScreenVerdict } from '../types'
 import { HARD_VETOES } from '../../config/scoring'
 import { BudgetGuard } from '../ai/budget'
 import { openai } from '../ai/clients'
+import { withRetry } from '../ai/retry'
 import { SCREEN_JSON_SCHEMA, SCREEN_SYSTEM_PROMPT, chunk } from '../screen/llmScreen'
 import { llmPoints } from '../screen/score'
 import { EVAL_SCREEN_GOLDEN, evalReportFile } from '../store/paths'
@@ -59,19 +60,38 @@ async function scoreGolden(rows: readonly GoldenRow[], model: string, maxTokens:
       ...batch.map((r, i) => `[${i + 1}] id: ${r.id}\n${r.material}`),
     ].join('\n\n')
 
-    const response = await openai().chat.completions.create({
-      model,
-      messages: [
-        { role: 'system', content: SCREEN_SYSTEM_PROMPT },
-        { role: 'user', content: userPrompt },
-      ],
-      response_format: { type: 'json_schema', json_schema: SCREEN_JSON_SCHEMA },
-      max_completion_tokens: maxTokens,
-    })
+    const response = await withRetry(
+      () =>
+        openai().chat.completions.create({
+          model,
+          messages: [
+            { role: 'system', content: SCREEN_SYSTEM_PROMPT },
+            { role: 'user', content: userPrompt },
+          ],
+          response_format: { type: 'json_schema', json_schema: SCREEN_JSON_SCHEMA },
+          max_completion_tokens: maxTokens,
+        }),
+      {
+        attempts: 6,
+        onRetry: (intento, espera) =>
+          log(`  (límite de ritmo · intento ${intento}, esperando ${(espera / 1000).toFixed(0)} s)`),
+      },
+    )
 
-    const content = response.choices[0]?.message.content ?? '{"results":[]}'
-    const parsed = JSON.parse(content) as { results?: ScreenVerdict[] }
-    for (const v of parsed.results ?? []) verdicts.set(v.id, v)
+    // Un modelo que NO respeta el esquema estricto devuelve su razonamiento en
+    // texto plano, y eso no puede tumbar la evaluación: es precisamente uno de
+    // los resultados que la evaluación tiene que medir. Los candidatos de ese
+    // lote se quedan sin veredicto y cuentan como fallo, que es lo correcto.
+    const content = response.choices[0]?.message.content ?? ''
+    try {
+      const parsed = JSON.parse(content) as { results?: ScreenVerdict[] }
+      for (const v of parsed.results ?? []) verdicts.set(v.id, v)
+    } catch {
+      log(
+        `  ⚠️  el modelo no devolvió JSON en un lote de ${batch.length}: ` +
+          `«${content.slice(0, 70).replace(/\s+/g, ' ')}…»`,
+      )
+    }
   }
 
   return verdicts

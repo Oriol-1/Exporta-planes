@@ -79,9 +79,11 @@ describe('screenAll ante un proveedor sin saldo', () => {
     expect(outcome.verdicts.size).toBe(0)
   })
 
-  it('un fallo transitorio SÍ se reintenta candidato a candidato', async () => {
-    const error = apiError(500, 'server_error')
-    const create = vi.fn().mockRejectedValue(error)
+  it('un fallo transitorio se reintenta DENTRO del lote, no candidato a candidato', async () => {
+    // El reintento individual del §5.4 existe para el TRUNCAMIENTO —llegan ocho
+    // de diez—, no para un proveedor caído: repetirlo por cada candidato serían
+    // N llamadas más al mismo agujero.
+    const create = vi.fn().mockRejectedValue(apiError(500, 'server_error'))
     vi.spyOn(clients, 'openai').mockReturnValue({
       chat: { completions: { create } },
     } as unknown as ReturnType<typeof clients.openai>)
@@ -91,9 +93,10 @@ describe('screenAll ante un proveedor sin saldo', () => {
 
     const outcome = await screenAll(clusters, BUDGET, guard, NOW)
 
-    // 1 lote + 2 reintentos individuales.
+    // 3 intentos del mismo lote, y se para. No 3 × 3.
     expect(create).toHaveBeenCalledTimes(3)
     expect(outcome.providerDown).toBe(false)
+    expect(outcome.providerError).toContain('500')
     expect(outcome.missing).toEqual(['uno', 'dos'])
-  })
+  }, 15_000)
 })

@@ -12,6 +12,7 @@ import type { Budget } from '../../config/schema'
 import type { Cluster, ScreenVerdict } from '../types'
 import { BudgetGuard, approximateTokens, estimateCost } from '../ai/budget'
 import { openai } from '../ai/clients'
+import { withRetry } from '../ai/retry'
 import { priceLabel } from '../normalize/price'
 import { clip } from '../core/text'
 import { TOKEN_ESTIMATES } from '../../config/budget'
@@ -242,15 +243,21 @@ export async function screenBatch(
   // corriendo, y los candidatos sin cribar quedan pendientes para mañana.
   let response
   try {
-    response = await openai().chat.completions.create({
-      model,
-      messages: [
-        { role: 'system', content: SCREEN_SYSTEM_PROMPT },
-        { role: 'user', content: userPrompt },
-      ],
-      response_format: { type: 'json_schema', json_schema: SCREEN_JSON_SCHEMA },
-      max_completion_tokens: budget.screenMaxOutputTokens,
-    })
+    // Un 429 de pool compartido —lo normal en una capa gratuita— se espera y se
+    // reintenta; lo que no se arregla esperando se propaga y lo trata el catch.
+    response = await withRetry(
+      () =>
+        openai().chat.completions.create({
+          model,
+          messages: [
+            { role: 'system', content: SCREEN_SYSTEM_PROMPT },
+            { role: 'user', content: userPrompt },
+          ],
+          response_format: { type: 'json_schema', json_schema: SCREEN_JSON_SCHEMA },
+          max_completion_tokens: budget.screenMaxOutputTokens,
+        }),
+      { attempts: 3, baseDelayMs: 1000 },
+    )
   } catch (error) {
     return {
       verdicts: new Map(),
@@ -334,7 +341,11 @@ export async function screenAll(
     if (outcome.providerError && !providerError) providerError = outcome.providerError
     if (outcome.providerDown) providerDown = true
 
-    if (providerDown || outcome.skippedForBudget) {
+    // Si el lote FALLÓ —ya con sus propios reintentos dentro—, insistir
+    // candidato a candidato por el mismo proveedor roto no aporta nada: serían
+    // N llamadas más al mismo agujero. El reintento individual del §5.4 existe
+    // para el TRUNCAMIENTO (llegan ocho de diez), no para un proveedor caído.
+    if (providerDown || outcome.skippedForBudget || outcome.providerError) {
       missing.push(...outcome.missing)
       continue
     }

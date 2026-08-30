@@ -16,31 +16,52 @@ import type { Budget, ModelPricing } from './schema'
  */
 const SIN_COSTE: ModelPricing = { inputPerMTokUsd: 0, outputPerMTokUsd: 0, batch: false }
 
-/** ¿Se ha configurado un endpoint compatible propio? */
-const endpointPropio = (process.env['OPENAI_BASE_URL'] ?? '').trim() !== ''
-
-const screenModel = process.env['SCREEN_MODEL'] ?? 'gpt-5-mini'
-const writerModel = process.env['WRITER_MODEL'] ?? 'claude-opus-5'
+/** Modelos con precio de catálogo. Un nombre de estos NUNCA se toma por gratis. */
+const MODELOS_DE_PAGO = ['gpt-5-mini', 'gpt-5', 'claude-opus-5', 'claude-sonnet-5'] as const
 
 /**
- * Precios de los modelos que se sirven desde el endpoint propio.
+ * Aplica el entorno a la configuración de presupuesto.
  *
- * Solo se añaden los que NO tienen precio ya: si alguien llama a su modelo local
- * `gpt-5-mini`, se le sigue cobrando el precio de OpenAI. Sobreestimar es la
- * dirección segura cuando hay un tope duro de por medio.
+ * SE LLAMA EN TIEMPO DE EJECUCIÓN, no al importar el módulo, y eso NO es un
+ * detalle: los imports de ES se evalúan antes que cualquier sentencia, así que
+ * un `process.env` leído aquí arriba se resolvería ANTES de que `readEnv()` haya
+ * cargado `.env.local`. El síntoma era silencioso y grave: `SCREEN_MODEL`,
+ * `WRITER_MODEL` y —lo peor— `AI_MONTHLY_BUDGET_EUR` puestos en `.env.local` se
+ * ignoraban sin decir nada. Quien bajara el tope a 1 € seguía con 5.
  */
-const preciosPropios: Record<string, ModelPricing> = {}
-if (endpointPropio) {
-  for (const modelo of [screenModel, writerModel]) {
-    if (!['gpt-5-mini', 'gpt-5', 'claude-opus-5', 'claude-sonnet-5'].includes(modelo)) {
-      preciosPropios[modelo] = SIN_COSTE
+export function applyEnv(base: Budget, env: NodeJS.ProcessEnv = process.env): Budget {
+  const screenModel = env['SCREEN_MODEL']?.trim() || base.screenModel
+  const writerModel = env['WRITER_MODEL']?.trim() || base.writerModel
+  const writerFallbackModel = env['WRITER_FALLBACK_MODEL']?.trim() || base.writerFallbackModel
+  const tope = Number(env['AI_MONTHLY_BUDGET_EUR'])
+  const endpointPropio = (env['OPENAI_BASE_URL'] ?? '').trim() !== ''
+
+  // Un modelo servido por un endpoint propio no factura por token. Solo se
+  // declara gratis si NO tiene precio de catálogo: si alguien llama a su modelo
+  // local `gpt-5-mini`, se le sigue cobrando. Sobreestimar es la dirección
+  // segura cuando hay un tope duro de por medio.
+  const preciosPropios: Record<string, ModelPricing> = {}
+  if (endpointPropio) {
+    for (const modelo of [screenModel, writerModel, writerFallbackModel]) {
+      if (!(MODELOS_DE_PAGO as readonly string[]).includes(modelo)) {
+        preciosPropios[modelo] = SIN_COSTE
+      }
     }
+  }
+
+  return {
+    ...base,
+    monthlyBudgetEur: Number.isFinite(tope) && tope > 0 ? tope : base.monthlyBudgetEur,
+    screenModel,
+    writerModel,
+    writerFallbackModel,
+    pricing: { ...base.pricing, ...preciosPropios },
   }
 }
 
+/** Valores POR DEFECTO. El entorno se aplica en `loadConfig()` (§3.5). */
 export const BUDGET: Budget = {
-  /** Tope duro. Se sobrescribe con AI_MONTHLY_BUDGET_EUR. */
-  monthlyBudgetEur: Number(process.env['AI_MONTHLY_BUDGET_EUR'] ?? 5),
+  monthlyBudgetEur: 5,
   usdToEur: 0.93, // agosto de 2026
   warnAtFraction: 0.7,
 
@@ -54,13 +75,11 @@ export const BUDGET: Budget = {
     'claude-sonnet-5': { inputPerMTokUsd: 1.0, outputPerMTokUsd: 5.0, batch: true },
     // Cascada de proveedor si Anthropic falla (§7.7).
     'gpt-5': { inputPerMTokUsd: 0.625, outputPerMTokUsd: 5.0, batch: true },
-    // Modelos servidos por un endpoint propio: coste cero, declarado.
-    ...preciosPropios,
   },
 
-  screenModel,
-  writerModel,
-  writerFallbackModel: process.env['WRITER_FALLBACK_MODEL'] ?? 'gpt-5',
+  screenModel: 'gpt-5-mini',
+  writerModel: 'claude-opus-5',
+  writerFallbackModel: 'gpt-5',
 
   screenBatchSize: 10,
   writeBatchSize: 30,

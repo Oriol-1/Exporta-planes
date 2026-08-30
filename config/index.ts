@@ -15,7 +15,7 @@ import { SOURCES } from './sources'
 import { MUSEUMS } from './museums'
 import { SCORING } from './scoring'
 import { QUOTAS } from './quotas'
-import { BUDGET } from './budget'
+import { BUDGET, applyEnv } from './budget'
 
 /** Días tras los que una revisión legal se considera caducada (§3.5). */
 export const VERIFICATION_MAX_AGE_DAYS = 180
@@ -53,7 +53,9 @@ export function loadConfig(now: Date): LoadedConfig {
   const museums = MuseumsSchema.parse(MUSEUMS)
   const scoring = ScoringSchema.parse(SCORING)
   const quotas = QuotasSchema.parse(QUOTAS)
-  const budget = BudgetSchema.parse(BUDGET)
+  // El entorno se aplica AQUÍ, no al importar budget.ts: para entonces
+  // `readEnv()` ya ha cargado `.env.local` (ver applyEnv).
+  const budget = BudgetSchema.parse(applyEnv(BUDGET))
 
   const warnings: ConfigWarning[] = []
 
