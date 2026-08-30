@@ -56,12 +56,26 @@ verificada de la web oficial de cada museo.
 pnpm install
 cp .env.example .env.local        # rellenar solo si vas a gastar en IA
 
+pnpm doctor                       # ← ¿está todo funcionando?
+```
+
+**`pnpm doctor` es la respuesta corta a «¿va bien esto?».** Revisa en una
+pantalla el contrato, la configuración, las claves, las fichas, la URL pública
+—incluida la `sha256`, que es lo que comprueba planonmap antes de aceptar el
+archivo—, los cinco workflows de GitHub y el gasto del mes. Cuando algo no está
+bien dice **qué hacer**, no solo que falla. Sale con código 1 si hay fallos, así
+que sirve dentro de un script; con `--offline` no toca la red.
+
+Lo que `doctor` no hace, porque tarda más:
+
+```bash
 pnpm validate                     # config/ y content/ contra sus esquemas
 pnpm test:run                     # 216 tests
 pnpm publish:build                # genera dist/v1/ desde content/
+pnpm curate --dry-run             # el embudo entero, sin gastar un céntimo
 ```
 
-Nada de eso sale a la red ni cuesta un céntimo.
+Nada de eso cuesta un céntimo.
 
 ### La frontera
 
@@ -120,6 +134,7 @@ que compartían el 90 % del código y podían divergir.
 | `pnpm archive <slug>` | Retira sin vetar: puede volver | No |
 | `pnpm sources:check` | Recomprueba `robots.txt` y `verifiedAt` | No |
 | `pnpm prompts:check --base <ref>` | ¿Ha cambiado algún prompt desde `<ref>`? Es la puerta del §5.7 | No |
+| **`pnpm doctor`** | Revisión general: contrato, config, fichas, URL pública, workflows y gasto | No |
 
 **`--dry-run` es el comando más importante de la lista**: permite tocar prompts,
 umbrales y adaptadores durante horas sin gastar un céntimo.
