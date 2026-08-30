@@ -15,6 +15,7 @@ import { openai } from '../ai/clients'
 import { withRetry } from '../ai/retry'
 import { priceLabel } from '../normalize/price'
 import { clip } from '../core/text'
+import { parseJsonLoose } from '../core/json'
 import { TOKEN_ESTIMATES } from '../../config/budget'
 
 /** Prompt de sistema. Constante, cacheable, versión `screen-v1`. */
@@ -202,8 +203,9 @@ function describeError(error: unknown): string {
 }
 
 function parseResults(raw: string): ScreenVerdict[] {
-  const parsed = JSON.parse(raw) as { results?: ScreenVerdict[] }
-  return Array.isArray(parsed.results) ? parsed.results : []
+  const parsed = parseJsonLoose<{ results?: ScreenVerdict[] }>(raw)
+  if (!parsed.ok || !parsed.value) return []
+  return Array.isArray(parsed.value.results) ? parsed.value.results : []
 }
 
 /**

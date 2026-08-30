@@ -18,8 +18,9 @@ import { llmPoints } from '../screen/score'
 import { EVAL_SCREEN_GOLDEN, evalReportFile } from '../store/paths'
 import { readText, writeText } from '../store/fs'
 import { PROMPT_VERSION } from '../core/hash'
+import { parseJsonLoose } from '../core/json'
 import { baseContext } from './env'
-import { fail, hasFlag, log, parseArgs } from './args'
+import { fail, hasFlag, log, numberArg, parseArgs } from './args'
 
 interface GoldenRow {
   readonly id: string
@@ -50,10 +51,15 @@ async function readGolden(): Promise<GoldenRow[]> {
   return rows
 }
 
-async function scoreGolden(rows: readonly GoldenRow[], model: string, maxTokens: number): Promise<Map<string, ScreenVerdict>> {
+async function scoreGolden(
+  rows: readonly GoldenRow[],
+  model: string,
+  maxTokens: number,
+  batchSize: number,
+): Promise<Map<string, ScreenVerdict>> {
   const verdicts = new Map<string, ScreenVerdict>()
 
-  for (const batch of chunk(rows, 12)) {
+  for (const batch of chunk(rows, batchSize)) {
     const userPrompt = [
       'Puntúa estos candidatos. Devuelve un resultado por cada uno, con su `id`.',
       '',
@@ -83,14 +89,14 @@ async function scoreGolden(rows: readonly GoldenRow[], model: string, maxTokens:
     // los resultados que la evaluación tiene que medir. Los candidatos de ese
     // lote se quedan sin veredicto y cuentan como fallo, que es lo correcto.
     const content = response.choices[0]?.message.content ?? ''
-    try {
-      const parsed = JSON.parse(content) as { results?: ScreenVerdict[] }
-      for (const v of parsed.results ?? []) verdicts.set(v.id, v)
-    } catch {
-      log(
-        `  ⚠️  el modelo no devolvió JSON en un lote de ${batch.length}: ` +
-          `«${content.slice(0, 70).replace(/\s+/g, ' ')}…»`,
-      )
+    const parsed = parseJsonLoose<{ results?: ScreenVerdict[] }>(content)
+    if (parsed.ok && parsed.value) {
+      if (parsed.via !== 'directo') {
+        log(`  (el modelo envolvió el JSON; se leyó igual · ${parsed.via})`)
+      }
+      for (const v of parsed.value.results ?? []) verdicts.set(v.id, v)
+    } else {
+      log(`  ⚠️  lote de ${batch.length} sin JSON legible: ${parsed.problem}`)
     }
   }
 
@@ -112,7 +118,10 @@ async function main(): Promise<void> {
   }
 
   const guard = await BudgetGuard.load(ctx.config.budget, ctx.clock.now())
-  const verdicts = await scoreGolden(rows, model, ctx.config.budget.screenMaxOutputTokens)
+  // El tamaño de lote afecta a la fiabilidad: hay modelos que respetan el
+  // esquema con cuatro candidatos y lo pierden con doce (§5.4).
+  const batchSize = numberArg(args, 'batch', 12)
+  const verdicts = await scoreGolden(rows, model, ctx.config.budget.screenMaxOutputTokens, batchSize)
 
   let correct = 0
   let falsePositives = 0

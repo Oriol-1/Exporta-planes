@@ -70,7 +70,7 @@ Lo que `doctor` no hace, porque tarda más:
 
 ```bash
 pnpm validate                     # config/ y content/ contra sus esquemas
-pnpm test:run                     # 248 tests
+pnpm test:run                     # 258 tests
 pnpm publish:build                # genera dist/v1/ desde content/
 pnpm curate --dry-run             # el embudo entero, sin gastar un céntimo
 ```
@@ -312,27 +312,26 @@ SCREEN_MODEL=qwen2.5:7b
 Con endpoint propio no hace falta `OPENAI_API_KEY`, y el presupuesto lo declara
 a coste cero.
 
-**Se probó, y el resultado fue malo.** `qwen2.5:7b` sobre el conjunto dorado de
-24 candidatos, medido con `pnpm eval:screen`:
+**Se probaron todas, y ninguna sirve.** Medido con `pnpm eval:screen` sobre el
+conjunto dorado de 24 candidatos (umbral: ≥ 21 aciertos, 0 vetos duros fallados):
 
-| Métrica | qwen2.5:7b local | Umbral |
+| Opción gratuita | Aciertos | Vetos fallados |
 | --- | --- | --- |
-| Aciertos | **11 de 24** | ≥ 21 |
-| Falsos positivos | 0 | ≤ 1 |
-| Vetos duros fallados | **6** | 0 |
+| `nvidia/nemotron-3-super-120b-a12b:free` (lotes de 4) | **10 / 24** | 3 |
+| Local `qwen2.5:7b` (Ollama) | **11 / 24** | 6 |
+| `nvidia/nemotron-…:free` (lotes de 12) | **0 / 24** | — |
+| `z-ai/glm-5.2:free` | no disponible: `429` en pool compartido | — |
+| `dots-studio/dots-3-note-preview:free` | devuelve los campos vacíos | — |
+| `openrouter/free` | enruta a un modelo de código | — |
+| GitHub Models | ⛔ `410`, retirado | — |
 
-No es que puntúe algo peor: **rechaza todo**. Dio entre 5 y 19 puntos de 55 a
-todos los candidatos, incluidos la Sagrada Família, el románico del MNAC y el
-Palau de la Música. Los 11 aciertos son los casos en que «rechazar» resultó ser
-la respuesta correcta por casualidad. En producción publicaría cero fichas.
+Todas caen en 10–11 de 24 cuando hace falta 21. No es que puntúen algo peor:
+**no discriminan**. El local dio entre 5 y 19 puntos de 55 a *todos*, incluidos
+la Sagrada Família y el románico del MNAC — en producción publicaría cero fichas.
 
-Acertó los vetos evidentes —la noche de poesía en catalán y el tablao de 89 €—
-pero se le escaparon seis, entre ellos el karaoke en un pub irlandés y el
-crucero con cena, que son de manual.
-
-Sirve para **probar el pipeline sin gastar**; no para decidir qué se publica. Un
-modelo mayor podría cambiar el resultado: mídelo antes de fiarte, que para eso
-está `pnpm eval:screen` y cuesta 0 €.
+Sirve para **probar el pipeline sin gastar**; no para decidir qué se publica.
+Si algún día quieres reevaluarlo con otro modelo, `pnpm eval:screen --batch 4`
+te da el número en tres minutos y por 0 €.
 
 Y recuerda que **el proyecto ya funciona sin IA**: rastrea, deduplica, puntúa los
 45 puntos deterministas, actualiza precios y horarios, retira lo caducado y
