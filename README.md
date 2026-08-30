@@ -289,6 +289,41 @@ Tres, todas menores y deliberadas:
 
 ---
 
+## No pagar por token, si es lo que buscas
+
+Tres preguntas que salen siempre, con la respuesta corta:
+
+| Vía | ¿Sirve? |
+| --- | --- |
+| Usar la suscripción de **ChatGPT Plus** | **No.** Cubre a una persona usando el chat de forma interactiva, no a un programa desatendido. Es otro producto con otra facturación, y no hay forma admitida de conectarlos |
+| **GitHub Models** (endpoint gratuito de GitHub) | **Ya no.** Responde `410`: está en proceso de retirada |
+| Un **modelo local** compatible con OpenAI | **Sí**, y el proyecto lo admite |
+
+Para la tercera, define `OPENAI_BASE_URL` en `.env.local`:
+
+```bash
+# Ollama
+ollama serve && ollama pull qwen2.5:7b
+
+OPENAI_BASE_URL=http://127.0.0.1:11434/v1
+SCREEN_MODEL=qwen2.5:7b
+```
+
+Con endpoint propio no hace falta `OPENAI_API_KEY`. **Pierdes criterio
+editorial**, que es justo lo que hace el cribado, así que mídelo con
+`pnpm eval:screen` contra el conjunto dorado antes de fiarte: un falso positivo
+—publicar una trampa turística— cuesta más que un falso negativo.
+
+Y recuerda que **el proyecto ya funciona sin IA**: rastrea, deduplica, puntúa los
+45 puntos deterministas, actualiza precios y horarios, retira lo caducado y
+publica. La IA solo hace falta para escribir fichas **nuevas**.
+
+Si al final decides pagar, la recarga mínima de 5 $ da para **4 meses** con todo
+funcionando en OpenAI (`gpt-5-mini` criba, `gpt-5` redacta), o **19 meses** si
+solo cribas. Una ficha de prueba cuesta 1,16 céntimos.
+
+---
+
 ## Licencias
 
 - **Código**: MIT — [`LICENSE-CODE`](LICENSE-CODE)
