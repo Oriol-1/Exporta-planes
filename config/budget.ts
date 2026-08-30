@@ -4,7 +4,39 @@
 // Los precios están en dólares porque así los publican los proveedores; la
 // conversión a euros es directa y vive en `usdToEur`. Tener el precio en UN
 // SOLO SITIO es lo que hace que un cambio de tarifas sea una línea.
-import type { Budget } from './schema'
+import type { Budget, ModelPricing } from './schema'
+
+/**
+ * Un endpoint propio —un modelo local, típicamente— no factura por token.
+ *
+ * El invariante «sin precio no se llama» del §7.6 se mantiene intacto: lo que
+ * cambia es que un modelo servido por TU máquina tiene un precio conocido, y es
+ * cero. Sin esto, configurar OPENAI_BASE_URL hacía que la configuración se
+ * negara a cargar, que es lo que pasó la primera vez que se probó.
+ */
+const SIN_COSTE: ModelPricing = { inputPerMTokUsd: 0, outputPerMTokUsd: 0, batch: false }
+
+/** ¿Se ha configurado un endpoint compatible propio? */
+const endpointPropio = (process.env['OPENAI_BASE_URL'] ?? '').trim() !== ''
+
+const screenModel = process.env['SCREEN_MODEL'] ?? 'gpt-5-mini'
+const writerModel = process.env['WRITER_MODEL'] ?? 'claude-opus-5'
+
+/**
+ * Precios de los modelos que se sirven desde el endpoint propio.
+ *
+ * Solo se añaden los que NO tienen precio ya: si alguien llama a su modelo local
+ * `gpt-5-mini`, se le sigue cobrando el precio de OpenAI. Sobreestimar es la
+ * dirección segura cuando hay un tope duro de por medio.
+ */
+const preciosPropios: Record<string, ModelPricing> = {}
+if (endpointPropio) {
+  for (const modelo of [screenModel, writerModel]) {
+    if (!['gpt-5-mini', 'gpt-5', 'claude-opus-5', 'claude-sonnet-5'].includes(modelo)) {
+      preciosPropios[modelo] = SIN_COSTE
+    }
+  }
+}
 
 export const BUDGET: Budget = {
   /** Tope duro. Se sobrescribe con AI_MONTHLY_BUDGET_EUR. */
@@ -22,10 +54,12 @@ export const BUDGET: Budget = {
     'claude-sonnet-5': { inputPerMTokUsd: 1.0, outputPerMTokUsd: 5.0, batch: true },
     // Cascada de proveedor si Anthropic falla (§7.7).
     'gpt-5': { inputPerMTokUsd: 0.625, outputPerMTokUsd: 5.0, batch: true },
+    // Modelos servidos por un endpoint propio: coste cero, declarado.
+    ...preciosPropios,
   },
 
-  screenModel: process.env['SCREEN_MODEL'] ?? 'gpt-5-mini',
-  writerModel: process.env['WRITER_MODEL'] ?? 'claude-opus-5',
+  screenModel,
+  writerModel,
   writerFallbackModel: process.env['WRITER_FALLBACK_MODEL'] ?? 'gpt-5',
 
   screenBatchSize: 10,

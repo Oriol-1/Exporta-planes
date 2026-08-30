@@ -70,7 +70,7 @@ Lo que `doctor` no hace, porque tarda más:
 
 ```bash
 pnpm validate                     # config/ y content/ contra sus esquemas
-pnpm test:run                     # 225 tests
+pnpm test:run                     # 229 tests
 pnpm publish:build                # genera dist/v1/ desde content/
 pnpm curate --dry-run             # el embudo entero, sin gastar un céntimo
 ```
@@ -309,10 +309,30 @@ OPENAI_BASE_URL=http://127.0.0.1:11434/v1
 SCREEN_MODEL=qwen2.5:7b
 ```
 
-Con endpoint propio no hace falta `OPENAI_API_KEY`. **Pierdes criterio
-editorial**, que es justo lo que hace el cribado, así que mídelo con
-`pnpm eval:screen` contra el conjunto dorado antes de fiarte: un falso positivo
-—publicar una trampa turística— cuesta más que un falso negativo.
+Con endpoint propio no hace falta `OPENAI_API_KEY`, y el presupuesto lo declara
+a coste cero.
+
+**Se probó, y el resultado fue malo.** `qwen2.5:7b` sobre el conjunto dorado de
+24 candidatos, medido con `pnpm eval:screen`:
+
+| Métrica | qwen2.5:7b local | Umbral |
+| --- | --- | --- |
+| Aciertos | **11 de 24** | ≥ 21 |
+| Falsos positivos | 0 | ≤ 1 |
+| Vetos duros fallados | **6** | 0 |
+
+No es que puntúe algo peor: **rechaza todo**. Dio entre 5 y 19 puntos de 55 a
+todos los candidatos, incluidos la Sagrada Família, el románico del MNAC y el
+Palau de la Música. Los 11 aciertos son los casos en que «rechazar» resultó ser
+la respuesta correcta por casualidad. En producción publicaría cero fichas.
+
+Acertó los vetos evidentes —la noche de poesía en catalán y el tablao de 89 €—
+pero se le escaparon seis, entre ellos el karaoke en un pub irlandés y el
+crucero con cena, que son de manual.
+
+Sirve para **probar el pipeline sin gastar**; no para decidir qué se publica. Un
+modelo mayor podría cambiar el resultado: mídelo antes de fiarte, que para eso
+está `pnpm eval:screen` y cuesta 0 €.
 
 Y recuerda que **el proyecto ya funciona sin IA**: rastrea, deduplica, puntúa los
 45 puntos deterministas, actualiza precios y horarios, retira lo caducado y
