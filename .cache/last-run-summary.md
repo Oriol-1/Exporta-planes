@@ -1,18 +1,18 @@
-## Ejecución `submit` · **EN SECO** (no se llamó a ningún modelo)
+## Ejecución `submit`
 
-Colecciones: museums · 2026-08-29T22:59:32.883+02:00
+Colecciones: plans, shows · 2026-08-30T04:41:02.891+02:00
 
 ### Embudo
 
 | Etapa | Cantidad | |
 |---|---:|---|
-| URL descubiertas | 64 |  |
-| descargadas | 15 | 0 sin cambios (304) |
-| candidatos | 15 |  |
-| clusters | 15 |  |
+| URL descubiertas | 66 |  |
+| descargadas | 0 | 0 sin cambios (304) |
+| candidatos | 0 |  |
+| clusters | 0 |  |
 | cribados | 0 | 0 desde caché |
-| seleccionados | 3 |  |
-| a redactar | 3 |  |
+| seleccionados | 0 |  |
+| a redactar | 0 |  |
 
 ### Coste
 
@@ -27,7 +27,3 @@ Esta ejecución: **0.0000 €**
 - ⚠️ source visit-barcelona: sin verificar (falta verifiedAt): se omite del rastreo
 - ⚠️ source bcn-cultura: sin verificar (falta verifiedAt): se omite del rastreo
 - ⚠️ source articket: sin verificar (falta verifiedAt): se omite del rastreo
-- ⚠️ fuente degradada: venue-official — error: fetch failed
-- ⚠️ cuota sin cubrir, se deja vacía: minGratuitos (1)
-- ⚠️ cuota sin cubrir, se deja vacía: minAtemporales (1)
-- ⚠️ cuota sin cubrir, se deja vacía: minTemporada (1)
