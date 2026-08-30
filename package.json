@@ -20,6 +20,7 @@
     "archive": "tsx src/cli/archive.ts",
     "sources:check": "tsx src/cli/sourcesCheck.ts",
     "prompts:check": "tsx src/cli/promptCheck.ts",
+    "doctor": "tsx src/cli/doctor.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest",
