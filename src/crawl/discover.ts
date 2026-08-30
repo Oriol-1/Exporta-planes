@@ -56,8 +56,49 @@ async function fetchXml(
   }
 }
 
-function collectSitemapUrls(doc: unknown): { maps: string[]; urls: DiscoveredUrl[] } {
-  const maps: string[] = []
+/** Sub-sitemaps que casi nunca traen contenido: taxonomías y metadatos. */
+const TAXONOMY_SITEMAP = /(category|categoria|tag|taxonom|author|autor|genere|professional|original_title)[-_]?sitemap/i
+
+/**
+ * Elige qué sub-sitemaps leer cuando hay más de los que caben en el tope.
+ *
+ * Leer «los ocho primeros» es lo que parece obvio y es justo lo que falla: un
+ * índice de WordPress los lista por tipo, y los primeros suelen ser taxonomías y
+ * archivos históricos. En barcelonasecreta.com los ocho primeros son páginas,
+ * categorías, autores y artículos de 2018; el contenido vivo está en el octavo
+ * archivo de `posts_v2`. Aquí se filtra por lo que pida la fuente, se descartan
+ * las taxonomías y se ordena por `lastmod` descendente.
+ */
+export function chooseSubSitemaps(
+  maps: readonly DiscoveredUrl[],
+  includes: readonly string[] | undefined,
+  limit: number,
+): DiscoveredUrl[] {
+  let candidates = [...maps]
+
+  if (includes && includes.length > 0) {
+    const filtered = candidates.filter((m) => includes.some((i) => m.url.includes(i)))
+    // Si el filtro no casa con nada, la fuente ha cambiado su estructura: mejor
+    // seguir con todos que quedarse a ciegas sin decir nada.
+    if (filtered.length > 0) candidates = filtered
+  } else {
+    const withoutTaxonomy = candidates.filter((m) => !TAXONOMY_SITEMAP.test(m.url))
+    if (withoutTaxonomy.length > 0) candidates = withoutTaxonomy
+  }
+
+  // Lo más recientemente modificado primero; sin `lastmod`, al final.
+  candidates.sort((a, b) => {
+    const ta = a.lastmod ? Date.parse(a.lastmod) : Number.NEGATIVE_INFINITY
+    const tb = b.lastmod ? Date.parse(b.lastmod) : Number.NEGATIVE_INFINITY
+    if (Number.isNaN(ta) && Number.isNaN(tb)) return 0
+    return (Number.isNaN(tb) ? Number.NEGATIVE_INFINITY : tb) - (Number.isNaN(ta) ? Number.NEGATIVE_INFINITY : ta)
+  })
+
+  return candidates.slice(0, limit)
+}
+
+function collectSitemapUrls(doc: unknown): { maps: DiscoveredUrl[]; urls: DiscoveredUrl[] } {
+  const maps: DiscoveredUrl[] = []
   const urls: DiscoveredUrl[] = []
   const root = doc as Record<string, unknown> | null
   if (!root) return { maps, urls }
@@ -66,7 +107,7 @@ function collectSitemapUrls(doc: unknown): { maps: string[]; urls: DiscoveredUrl
   if (index) {
     for (const sm of asArray(index['sitemap'] as Record<string, unknown> | Record<string, unknown>[])) {
       const loc = textOf(sm['loc'])
-      if (loc) maps.push(loc)
+      if (loc) maps.push({ url: loc, lastmod: textOf(sm['lastmod']) })
     }
   }
 
@@ -134,16 +175,20 @@ export async function discover(
       const { maps, urls } = collectSitemapUrls(first)
       const all: DiscoveredUrl[] = [...urls]
 
-      for (const map of maps.slice(0, MAX_SUBSITEMAPS)) {
-        const sub = await fetchXml(fetcher, map, source)
+      const chosen = chooseSubSitemaps(maps, source.discovery.sitemapIncludes, MAX_SUBSITEMAPS)
+      for (const map of chosen) {
+        const sub = await fetchXml(fetcher, map.url, source)
         if (sub === null) {
-          notes.push(`sub-sitemap ilegible: ${map}`)
+          notes.push(`sub-sitemap ilegible: ${map.url}`)
           continue
         }
         all.push(...collectSitemapUrls(sub).urls)
       }
-      if (maps.length > MAX_SUBSITEMAPS) {
-        notes.push(`${maps.length} sub-sitemaps, se leyeron los ${MAX_SUBSITEMAPS} primeros`)
+      if (maps.length > chosen.length) {
+        notes.push(
+          `${maps.length} sub-sitemaps; se leyeron ${chosen.length}: ` +
+            chosen.map((m) => m.url.split('/').pop()).join(', '),
+        )
       }
 
       const pathIncludes = source.discovery.pathIncludes

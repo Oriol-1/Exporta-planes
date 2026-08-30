@@ -38,7 +38,14 @@ export const SOURCES: SourceConfig[] = [
     trust: 0.95,
     collections: ['plans'],
     home: 'https://barcelonasecreta.com',
-    discovery: { kind: 'sitemap', url: 'https://barcelonasecreta.com/sitemap_index.xml' },
+    discovery: {
+      kind: 'sitemap',
+      url: 'https://barcelonasecreta.com/sitemap_index.xml',
+      // Su índice tiene 25 sub-sitemaps: páginas, categorías, autores y el mismo
+      // contenido repetido en siete idiomas. `posts_v2` es el original en
+      // castellano; las traducciones serían duplicados de lo mismo.
+      sitemapIncludes: ['posts_v2'],
+    },
     crawlDelayMs: 5000,
     maxPagesPerDay: 40,
     verifiedAt: '2026-08-29',
@@ -90,6 +97,10 @@ export const SOURCES: SourceConfig[] = [
     discovery: {
       kind: 'sitemap',
       url: 'https://www.teatrebarcelona.com/es/sitemap_index.xml',
+      // Su índice tiene 36 sub-sitemaps y las OBRAS están en `espectacle-*`.
+      // Sin este filtro se leían los ocho primeros, que son artículos de revista
+      // y páginas estáticas: el rastreo traía 0 espectáculos.
+      sitemapIncludes: ['espectacle'],
     },
     crawlDelayMs: 10000, // ← su robots.txt declara Crawl-delay: 10 para ClaudeBot
     maxPagesPerDay: 40,

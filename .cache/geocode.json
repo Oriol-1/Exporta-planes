@@ -1,0 +1,32 @@
+{
+  "carrer allada vermell, 15, 08003, barcelona": {
+    "lat": 41.3867828,
+    "lng": 2.1812609,
+    "resolvedAt": "2026-08-30T06:55:13.923Z",
+    "displayName": "15, Carrer d'Allada Vermell, la Ribera, Sant Pere, Santa Caterina i la Ribera, Ciutat Vella, Barcelona, Barcelonès, Barcelona, Catalunya, 08003, España"
+  },
+  "carrer buenos aires, 47-49, 08036, barcelona": {
+    "lat": 41.3928877,
+    "lng": 2.1477213,
+    "resolvedAt": "2026-08-30T06:55:13.923Z",
+    "displayName": "Carrer de Buenos Aires, l'Antiga Esquerra de l'Eixample, l'Eixample, Barcelona, Barcelonès, Barcelona, Catalunya, 08036, España"
+  },
+  "carrer castillejos, 179, 08013, barcelona": {
+    "lat": 41.4020744,
+    "lng": 2.1838973,
+    "resolvedAt": "2026-08-30T06:55:13.923Z",
+    "displayName": "179, Carrer de los Castillejos, el Fort Pienc, l'Eixample, Barcelona, Barcelonès, Barcelona, Catalunya, 08013, España"
+  },
+  "carrer consell de cent, 435, 08009, barcelona": {
+    "lat": 41.5135394,
+    "lng": 2.1268756,
+    "resolvedAt": "2026-08-30T06:55:13.923Z",
+    "displayName": "Carrer Consell de Cent, Can Serra, Barberà del Vallès, Vallès Occidental, Barcelona, Catalunya, 08210, España"
+  },
+  "carrer riereta, 31, 08001, barcelona": {
+    "lat": 41.3777143,
+    "lng": 2.1690553,
+    "resolvedAt": "2026-08-30T06:55:13.923Z",
+    "displayName": "31, Carrer de la Riereta, el Raval, Ciutat Vella, Barcelona, Barcelonès, Barcelona, Catalunya, 08001, España"
+  }
+}

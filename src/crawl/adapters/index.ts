@@ -27,10 +27,14 @@ function looksLikeDetail(url: string): boolean {
   if (NEVER_DETAIL.test(url)) return false
   try {
     const path = new URL(url).pathname.replace(/\/$/, '')
-    // Una portada ('' o '/es') no es una ficha; una ruta con dos o más
-    // segmentos y un slug largo casi siempre lo es.
     const segments = path.split('/').filter(Boolean)
-    if (segments.length < 2) return false
+    if (segments.length === 0) return false // la portada no es una ficha
+
+    // Lo que distingue una ficha es su ÚLTIMO segmento: un slug largo y con
+    // guiones. NO se exige que haya dos o más segmentos, porque hay sitios que
+    // publican en la raíz: barcelonasecreta.com sirve sus artículos como
+    // `/tirolina-mas-larga-catalunya-boi-taull/`, y exigir dos segmentos
+    // descartaba el catálogo entero de esa fuente.
     const last = segments[segments.length - 1] ?? ''
     return last.length >= 8 && last.includes('-')
   } catch {
@@ -95,8 +99,10 @@ const teatreBarcelona: Adapter = {
     venue: '.teatre-nom, .sala',
     ticketsUrl: 'a.comprar, a[href*="entrades"], a[href*="entradas"]',
   }),
-  // Su sitemap mezcla obras y salas; solo las obras son fichas.
-  isDetailUrl: (url) => /\/obra[s]?\//i.test(url) || /\/espectacle/i.test(url),
+  // Su sitemap mezcla obras, salas, ciclos y artículos de revista: solo las
+  // obras son fichas. Publica las rutas en catalán Y en castellano, así que
+  // hacen falta las dos formas: `/espectacle/` y `/espectaculo/`.
+  isDetailUrl: (url) => /\/(obra|obras|espectacle|espectaculo|espectacles|espectaculos)\//i.test(url),
 }
 
 const enderrockAgenda: Adapter = baseAdapter('enderrock-agenda', ['shows'])

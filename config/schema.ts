@@ -14,7 +14,17 @@ export const DiscoverySchema = z.discriminatedUnion('kind', [
   z.object({
     kind: z.literal('sitemap'),
     url: z.string().url().optional(),
+    /** Filtra las URL finales: solo se quedan las que contengan alguno. */
     pathIncludes: z.array(z.string()).optional(),
+    /**
+     * Filtra los SUB-SITEMAPS de un índice, que es distinto y suele importar
+     * más. Un índice de WordPress mezcla taxonomías, páginas y varios archivos
+     * históricos: sin este filtro se leen los ocho primeros, que casi nunca son
+     * los que traen el contenido. Ejemplo real: en teatrebarcelona.com las obras
+     * están en `espectacle-sitemap*.xml`, y los ocho primeros del índice son
+     * artículos de revista y páginas estáticas.
+     */
+    sitemapIncludes: z.array(z.string()).optional(),
   }),
   z.object({ kind: z.literal('rss'), url: z.string().url() }),
   z.object({ kind: z.literal('perEntity') }),

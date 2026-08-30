@@ -1,18 +1,28 @@
 ## Ejecución `submit` · **EN SECO** (no se llamó a ningún modelo)
 
-Colecciones: museums · 2026-08-29T22:59:32.883+02:00
+Colecciones: plans, shows · 2026-08-30T09:06:58.371+02:00
 
 ### Embudo
 
 | Etapa | Cantidad | |
 |---|---:|---|
-| URL descubiertas | 64 |  |
-| descargadas | 15 | 0 sin cambios (304) |
-| candidatos | 15 |  |
-| clusters | 15 |  |
-| cribados | 0 | 0 desde caché |
-| seleccionados | 3 |  |
-| a redactar | 3 |  |
+| URL descubiertas | 95 |  |
+| descargadas | 6 | 0 sin cambios (304) |
+| candidatos | 5 |  |
+| clusters | 5 |  |
+| cribados | 1 | 0 desde caché |
+| seleccionados | 0 |  |
+| a redactar | 0 |  |
+
+### Descartes del prefiltro (sin coste)
+
+- `fuera-de-ventana`: 4
+
+### Descartadas tras el cribado
+
+| Ficha | Motivo |
+|---|---|
+| sala-versus-glories | 23 puntos, por debajo de 62 |
 
 ### Coste
 
@@ -27,7 +37,3 @@ Esta ejecución: **0.0000 €**
 - ⚠️ source visit-barcelona: sin verificar (falta verifiedAt): se omite del rastreo
 - ⚠️ source bcn-cultura: sin verificar (falta verifiedAt): se omite del rastreo
 - ⚠️ source articket: sin verificar (falta verifiedAt): se omite del rastreo
-- ⚠️ fuente degradada: venue-official — error: fetch failed
-- ⚠️ cuota sin cubrir, se deja vacía: minGratuitos (1)
-- ⚠️ cuota sin cubrir, se deja vacía: minAtemporales (1)
-- ⚠️ cuota sin cubrir, se deja vacía: minTemporada (1)
