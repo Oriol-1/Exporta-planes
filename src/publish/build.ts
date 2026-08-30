@@ -56,6 +56,56 @@ function collectionUrl(baseUrl: string, collection: CuratedCollection): string {
   return `${baseUrl.replace(/\/$/, '')}/v1/${collection}.json`
 }
 
+/** Se lanza cuando la configuración de publicación no sirve. */
+export class InvalidBaseUrlError extends Error {
+  constructor(baseUrl: string, reason: string) {
+    super(
+      [
+        `La URL base de publicación no sirve: ${reason}`,
+        `  valor recibido: ${baseUrl === '' ? '(vacío)' : JSON.stringify(baseUrl)}`,
+        '',
+        'Sale de PUBLISH_BASE_URL, o del argumento --base-url. En GitHub Actions se',
+        'define como VARIABLE del repositorio, no como secreto: es una URL pública.',
+        '',
+        '  gh variable set PUBLISH_BASE_URL --body "https://<usuario>.github.io/<repo>"',
+        '',
+        'Ojo: una variable que no existe llega como CADENA VACÍA, no como ausente.',
+      ].join('\n'),
+    )
+    this.name = 'InvalidBaseUrlError'
+  }
+}
+
+/**
+ * Comprueba la URL base ANTES de leer una sola ficha.
+ *
+ * Sin esto, una variable mal configurada no se nota hasta el final, y entonces
+ * revienta con un ZodError sobre `collections.0.url` que no dice en ningún sitio
+ * cuál es la variable que falta. Es la misma idea que la validación de config/
+ * del §3.5: el error tiene que señalar la causa, no el síntoma.
+ */
+export function assertValidBaseUrl(baseUrl: string): void {
+  if (baseUrl.trim() === '') {
+    throw new InvalidBaseUrlError(baseUrl, 'está vacía')
+  }
+  let parsed: URL
+  try {
+    parsed = new URL(baseUrl)
+  } catch {
+    throw new InvalidBaseUrlError(baseUrl, 'no es una URL absoluta')
+  }
+  if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+    throw new InvalidBaseUrlError(baseUrl, `el esquema "${parsed.protocol}" no es http(s)`)
+  }
+  // La URL que se publica en el índice tiene que validar contra el contrato.
+  const probe = collectionUrl(baseUrl, 'museums')
+  try {
+    new URL(probe)
+  } catch {
+    throw new InvalidBaseUrlError(baseUrl, `produce una URL de colección inválida: ${probe}`)
+  }
+}
+
 /**
  * Construye las tres colecciones y el índice.
  *
@@ -64,6 +114,10 @@ function collectionUrl(baseUrl: string, collection: CuratedCollection): string {
  * que divergieran.
  */
 export async function build(opts: BuildOptions): Promise<BuildReport> {
+  // Lo primero, antes de leer una sola ficha: si la URL base no sirve, el
+  // trabajo entero se tiraría al final por un motivo que el error no explica.
+  assertValidBaseUrl(opts.baseUrl)
+
   const vetoedSlugs = new Set((await readVetoes()).map((v) => v.slug))
   const reports: CollectionReport[] = []
   const indexEntries: IndexFile['collections'][number][] = []

@@ -4,7 +4,7 @@
 // `dist/` NO se commitea: se sube como artefacto de Pages. `content/` es el
 // producto; `dist/` es una proyección, y tener las dos versionadas invitaría a
 // que divergieran.
-import { build, formatBuildReport } from '../publish/build'
+import { build, formatBuildReport, InvalidBaseUrlError } from '../publish/build'
 import { baseContext } from './env'
 import { fail, hasFlag, log, parseArgs, stringArg } from './args'
 
@@ -13,14 +13,21 @@ async function main(): Promise<void> {
   const ctx = baseContext()
   const dryRun = hasFlag(args, 'dry-run')
 
-  const report = await build({
-    now: ctx.clock.now(),
-    nowIso: ctx.clock.nowIso(),
-    baseUrl: stringArg(args, 'base-url', ctx.env.publishBaseUrl),
-    producerVersion: ctx.env.producerVersion,
-    dryRun,
-    archiveExpired: hasFlag(args, 'archive-expired'),
-  })
+  let report
+  try {
+    report = await build({
+      now: ctx.clock.now(),
+      nowIso: ctx.clock.nowIso(),
+      baseUrl: stringArg(args, 'base-url', ctx.env.publishBaseUrl),
+      producerVersion: ctx.env.producerVersion,
+      dryRun,
+      archiveExpired: hasFlag(args, 'archive-expired'),
+    })
+  } catch (e) {
+    // Un error de configuración merece un mensaje, no un volcado de pila.
+    if (e instanceof InvalidBaseUrlError) fail(`\n${e.message}`)
+    throw e
+  }
 
   log(formatBuildReport(report))
 
