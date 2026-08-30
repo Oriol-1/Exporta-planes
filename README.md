@@ -19,7 +19,7 @@ en tres archivos JSON en una URL pública.
 **El entregable son tres archivos JSON bien hechos, servidos en una URL.**
 
 | | |
-|---|---|
+| --- | --- |
 | Salida | `/v1/index.json` · `/v1/plans.json` · `/v1/shows.json` · `/v1/museums.json` |
 | Coste de infraestructura | 0 € — Actions y Pages en repositorio público |
 | Coste de IA | ≈ **2,30 €/mes**, con tope duro de 5 € |
@@ -34,7 +34,7 @@ todo el código apuntan a sus apartados.
 ## Estado: Fase 0 completa
 
 | Fase | Qué incluye | Estado |
-|---|---|---|
+| --- | --- | --- |
 | **0 · Cimientos** | Tres zonas, contrato vendorizado, fixture dorado, config validada con la puerta `verifiedAt`, reloj inyectable, fetcher educado, tres extractores, y **cinco fichas de museo escritas a mano** | ✅ |
 | **1 · Museos** | Catálogo de 55 museos, extracción determinista, `changeHash`, redactor por Batch API, verificación por evidencias, libro de gasto y PR de revisión | 🔧 código listo, falta ejecutarlo con claves |
 | **2 · Conexión** | Trabajo **dentro de planonmap**. No es de este repositorio | ⏳ |
@@ -95,7 +95,7 @@ caro de arreglar: si las fichas escritas viven junto al índice de URL vistas
 bajo miles de líneas de ruido**, y el PR es precisamente el panel de revisión.
 
 | Zona | Carpeta | Quién la escribe | ¿Se puede perder? |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **Producto** | `content/` | El pipeline propone, la persona aprueba | **No.** Es lo caro y lo revisado |
 | **Contrato** | `contracts/` | Solo una persona, al versionar | No, pero está transcrito en el plan |
 | **Caché** | `.cache/` | Solo la máquina | **Sí.** Se regenera sola |
@@ -112,7 +112,7 @@ Un solo verbo, `curate`, con parámetros. Antes había dos comandos casi iguales
 que compartían el 90 % del código y podían divergir.
 
 | Comando | Qué hace | ¿Gasta? |
-|---|---|---|
+| --- | --- | --- |
 | `pnpm curate --phase submit --collection plans,shows` | Rastrea, criba y **envía** el lote de redacción | Sí |
 | `pnpm curate --phase collect` | **Recoge** el lote, verifica y escribe las fichas | No (ya pagado al enviar) |
 | `pnpm curate --phase submit --collection museums` | Ídem para la colección C | Solo si algo cambió |
@@ -173,7 +173,7 @@ presupuesto se agota, se sigue publicando lo ya escrito.
 ## Coste (§7.4)
 
 | Escenario | Cribado | Redacción | Total |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Mínimo · invierno | 0,12 € | 0,99 € | **≈ 1,11 €/mes** |
 | **Esperado** | 0,24 € | 2,04 € | **≈ 2,28 €/mes** |
 | Peor caso · reproceso masivo | 0,36 € | 8,02 € | ≈ 8,39 €/mes → **cortado a 5 €** |

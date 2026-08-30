@@ -7,7 +7,7 @@ mergear un Pull Request: no hay panel, no hay base de datos, no hay servicio que
 mantener (§10.1).
 
 | Carpeta | Qué hay |
-|---|---|
+| --- | --- |
 | `cards/plans/` · `cards/shows/` · `cards/museums/` | Una ficha por archivo. Vetar es **borrar el archivo** desde la interfaz web del PR |
 | `archive/` | Fichas retiradas, **nunca borradas**. Si un montaje vuelve la temporada siguiente, se reactiva sin volver a pagar la redacción |
 | `vetoed.json` | Slugs vetados, con fecha y motivo. Es **para siempre**, salvo que se borre la entrada a mano |

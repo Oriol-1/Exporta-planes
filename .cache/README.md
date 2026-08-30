@@ -10,7 +10,7 @@ como `linguist-generated`, de modo que GitHub la **colapsa** en el diff del PR y
 el revisor ve lo único que le interesa: las fichas de `content/`.
 
 | Archivo | Qué guarda |
-|---|---|
+| --- | --- |
 | `index/<fuente>.ndjson` | Una línea por URL vista: etag, `semanticHash`, fechas, veredicto |
 | `decisions/<año-mes>.ndjson` | Cada decisión con su puntuación, modelo y tokens. Es a la vez caché y etiqueta de entrenamiento |
 | `clusters/<id>.json` | Clusters y el estado que la fase `collect` necesita para reconstruir una ficha |

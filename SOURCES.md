@@ -21,7 +21,7 @@ Qué hay que comprobar antes de poner una fecha en `verifiedAt`:
 ## timeout-bcn · Time Out Barcelona
 
 | | |
-|---|---|
+| --- | --- |
 | Nivel | A (cuenta para el consenso, peso 1,00) |
 | Home | `https://www.timeout.es/barcelona` |
 | Descubrimiento | `sitemap.xml`, filtrando rutas que contengan `/barcelona/` |
@@ -34,7 +34,7 @@ Qué hay que comprobar antes de poner una fecha en `verifiedAt`:
 ## barcelona-secreta · Barcelona Secreta
 
 | | |
-|---|---|
+| --- | --- |
 | Nivel | A (peso 0,95) |
 | Home | `https://barcelonasecreta.com` |
 | Descubrimiento | `sitemap_index.xml` |
@@ -47,7 +47,7 @@ Qué hay que comprobar antes de poner una fecha en `verifiedAt`:
 ## teatre-barcelona · Teatre Barcelona
 
 | | |
-|---|---|
+| --- | --- |
 | Nivel | B (peso 0,90) |
 | Home | `https://www.teatrebarcelona.com` |
 | Descubrimiento | `https://www.teatrebarcelona.com/es/sitemap_index.xml` |
@@ -59,7 +59,7 @@ Qué hay que comprobar antes de poner una fecha en `verifiedAt`:
 ## museus-bcn · Museus de Barcelona
 
 | | |
-|---|---|
+| --- | --- |
 | Nivel | C (**no cuenta para el consenso**; sirve para verificar) |
 | Home | `https://www.barcelona.cat/museus` |
 | Descubrimiento | Sitemap del portal municipal |
@@ -71,7 +71,7 @@ Qué hay que comprobar antes de poner una fecha en `verifiedAt`:
 ## venue-official · Ficha oficial del propio recinto
 
 | | |
-|---|---|
+| --- | --- |
 | Nivel | C (**no cuenta para el consenso**) |
 | Home | — (una URL por entidad, desde `config/museums.ts`) |
 | Descubrimiento | `perEntity`: la URL la trae el catálogo, no un sitemap |

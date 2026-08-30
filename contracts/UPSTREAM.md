@@ -3,7 +3,7 @@
 `event.ts` es una transcripción del esquema de eventos de planonmap.
 
 | Campo | Valor |
-|---|---|
+| --- | --- |
 | Origen | planonmap · `types/event.ts` |
 | Commit de referencia | `2cba2f0` |
 | Fecha de la transcripción | 2026-08-29 |
