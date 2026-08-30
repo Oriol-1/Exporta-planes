@@ -29,6 +29,10 @@ El plan completo que define este proyecto está en
 [`PLAN-PROYECTO-EXTERNO.md`](PLAN-PROYECTO-EXTERNO.md). Las referencias `§X.Y` de
 todo el código apuntan a sus apartados.
 
+**¿Vuelves después de un tiempo y no sabes por dónde seguir?**
+[`SIGUIENTE-PASO.md`](SIGUIENTE-PASO.md) tiene el estado, la decisión pendiente y
+las órdenes exactas — incluido lo que ya se probó y **no** hay que volver a intentar.
+
 ---
 
 ## Estado: Fase 0 completa
