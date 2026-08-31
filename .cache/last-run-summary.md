@@ -1,28 +1,18 @@
-## Ejecución `submit` · **EN SECO** (no se llamó a ningún modelo)
+## Ejecución `submit`
 
-Colecciones: plans, shows · 2026-08-30T09:06:58.371+02:00
+Colecciones: plans, shows · 2026-08-31T04:43:56.515+02:00
 
 ### Embudo
 
 | Etapa | Cantidad | |
 |---|---:|---|
-| URL descubiertas | 95 |  |
-| descargadas | 6 | 0 sin cambios (304) |
-| candidatos | 5 |  |
-| clusters | 5 |  |
-| cribados | 1 | 0 desde caché |
+| URL descubiertas | 55 |  |
+| descargadas | 0 | 0 sin cambios (304) |
+| candidatos | 0 |  |
+| clusters | 0 |  |
+| cribados | 0 | 0 desde caché |
 | seleccionados | 0 |  |
 | a redactar | 0 |  |
-
-### Descartes del prefiltro (sin coste)
-
-- `fuera-de-ventana`: 4
-
-### Descartadas tras el cribado
-
-| Ficha | Motivo |
-|---|---|
-| sala-versus-glories | 23 puntos, por debajo de 62 |
 
 ### Coste
 
@@ -37,3 +27,4 @@ Esta ejecución: **0.0000 €**
 - ⚠️ source visit-barcelona: sin verificar (falta verifiedAt): se omite del rastreo
 - ⚠️ source bcn-cultura: sin verificar (falta verifiedAt): se omite del rastreo
 - ⚠️ source articket: sin verificar (falta verifiedAt): se omite del rastreo
+- ⚠️ fuente degradada: teatre-barcelona — 0 elementos extraídos · 0 elementos frente a una mediana de 6
