@@ -1,4 +1,10 @@
 {
+  "avinguda paral·lel, 59, 08004, barcelona": {
+    "lat": 41.3749969,
+    "lng": 2.1622928,
+    "resolvedAt": "2026-09-01T02:42:37.826Z",
+    "displayName": "Avinguda Paral·lel, Santa Madrona, el Poble-sec, Sants-Montjuïc, Barcelona, Barcelonès, Barcelona, Catalunya, 08004, España"
+  },
   "carrer allada vermell, 15, 08003, barcelona": {
     "lat": 41.3867828,
     "lng": 2.1812609,
@@ -22,6 +28,36 @@
     "lng": 2.1268756,
     "resolvedAt": "2026-08-30T06:55:13.923Z",
     "displayName": "Carrer Consell de Cent, Can Serra, Barberà del Vallès, Vallès Occidental, Barcelona, Catalunya, 08210, España"
+  },
+  "carrer de bailen, 205, 08037, barcelona": {
+    "lat": 41.4020374,
+    "lng": 2.1636583,
+    "resolvedAt": "2026-09-01T02:42:37.826Z",
+    "displayName": "205, Carrer de Bailèn, la Vila de Gràcia, Gràcia, Barcelona, Barcelonès, Barcelona, Catalunya, 08037, España"
+  },
+  "carrer hospital, 51, 08001, barcelona": {
+    "lat": 41.3471746,
+    "lng": 2.0459933,
+    "resolvedAt": "2026-09-01T02:42:37.826Z",
+    "displayName": "Carrer Hospital, Barri Centre, Sant Boi de Llobregat, Baix Llobregat, Barcelona, Catalunya, 08830, España"
+  },
+  "carrer joaquin costa, 68, 08001, barcelona": {
+    "lat": 41.3840178,
+    "lng": 2.1642812,
+    "resolvedAt": "2026-09-01T02:42:37.826Z",
+    "displayName": "68-72, Carrer de Joaquín Costa, el Raval, Ciutat Vella, Barcelona, Barcelonès, Barcelona, Catalunya, 08011, España"
+  },
+  "carrer marti 18, 08024, barcelona": {
+    "lat": 41.4066905,
+    "lng": 2.1549789,
+    "resolvedAt": "2026-09-01T02:42:37.826Z",
+    "displayName": "18, Carrer de Martí, la Vila de Gràcia, Gràcia, Barcelona, Barcelonès, Barcelona, Catalunya, 08024, España"
+  },
+  "carrer muntaner, 4, 08011, barcelona": {
+    "lat": 41.3841161,
+    "lng": 2.162911,
+    "resolvedAt": "2026-09-01T02:42:37.826Z",
+    "displayName": "Teatre Muntaner, 4, Carrer de Muntaner, Sant Antoni, l'Eixample, Barcelona, Barcelonès, Barcelona, Catalunya, 08011, España"
   },
   "carrer riereta, 31, 08001, barcelona": {
     "lat": 41.3777143,
