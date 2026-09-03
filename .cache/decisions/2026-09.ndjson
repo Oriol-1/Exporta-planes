@@ -1,0 +1,25 @@
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-muntaner","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"sala-atrium","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-muntaner","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-romea","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-apolo","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"espai-texas","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"espai-texas","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"espai-texas","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"espai-texas","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"espai-texas","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"espai-texas","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"la-badabadoc","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"sala-flyhard","collection":"shows","stage":"prefilter","outcome":"rejected","reason":"fuera-de-ventana"}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-goya","collection":"shows","stage":"select","outcome":"rejected","reason":"21 puntos, por debajo de 62","score":21}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"lautentica-teatre","collection":"shows","stage":"select","outcome":"rejected","reason":"25 puntos, por debajo de 62","score":25}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"espai-texas","collection":"shows","stage":"select","outcome":"rejected","reason":"23 puntos, por debajo de 62","score":23}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-apolo","collection":"shows","stage":"select","outcome":"rejected","reason":"21 puntos, por debajo de 62","score":21}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-muntaner","collection":"shows","stage":"select","outcome":"rejected","reason":"23 puntos, por debajo de 62","score":23}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-apolo","collection":"shows","stage":"select","outcome":"rejected","reason":"19 puntos, por debajo de 62","score":19}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"la-badabadoc","collection":"shows","stage":"select","outcome":"rejected","reason":"25 puntos, por debajo de 62","score":25}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"la-badabadoc","collection":"shows","stage":"select","outcome":"rejected","reason":"21 puntos, por debajo de 62","score":21}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"antic-teatre","collection":"shows","stage":"select","outcome":"rejected","reason":"23 puntos, por debajo de 62","score":23}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-eolia","collection":"shows","stage":"select","outcome":"rejected","reason":"25 puntos, por debajo de 62","score":25}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"teatre-tivoli","collection":"shows","stage":"select","outcome":"rejected","reason":"23 puntos, por debajo de 62","score":23}
+{"at":"2026-09-03T05:45:25.517+02:00","clusterId":"la-badabadoc","collection":"shows","stage":"select","outcome":"rejected","reason":"21 puntos, por debajo de 62","score":21}

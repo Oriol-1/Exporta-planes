@@ -4,11 +4,12 @@
     "status": "ok",
     "medianExtracted": 0,
     "recentExtracted": [
+      0,
       0
     ],
     "emptyFieldRate": 0,
     "consecutiveDegradedDays": 0,
-    "lastRunAt": "2026-08-30T07:03:48.236Z"
+    "lastRunAt": "2026-09-03T03:45:25.517Z"
   },
   "museus-bcn": {
     "id": "museus-bcn",
@@ -24,35 +25,38 @@
   "teatre-barcelona": {
     "id": "teatre-barcelona",
     "status": "ok",
-    "medianExtracted": 6,
+    "medianExtracted": 18.5,
     "recentExtracted": [
-      6
+      6,
+      31
     ],
-    "emptyFieldRate": 0,
+    "emptyFieldRate": 0.0967741935483871,
     "consecutiveDegradedDays": 0,
-    "lastRunAt": "2026-08-30T07:03:48.236Z"
+    "lastRunAt": "2026-09-03T03:45:25.517Z"
   },
   "timeout-bcn": {
     "id": "timeout-bcn",
     "status": "ok",
     "medianExtracted": 0,
     "recentExtracted": [
+      0,
       0
     ],
     "emptyFieldRate": 0,
     "consecutiveDegradedDays": 0,
-    "lastRunAt": "2026-08-30T07:03:48.236Z"
+    "lastRunAt": "2026-09-03T03:45:25.517Z"
   },
   "venue-official": {
     "id": "venue-official",
     "status": "degraded",
-    "medianExtracted": 7.5,
+    "medianExtracted": 0,
     "recentExtracted": [
       15,
+      0,
       0
     ],
     "emptyFieldRate": 0,
-    "consecutiveDegradedDays": 2,
-    "lastRunAt": "2026-08-30T07:03:48.236Z"
+    "consecutiveDegradedDays": 3,
+    "lastRunAt": "2026-09-03T03:45:25.517Z"
   }
 }

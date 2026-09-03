@@ -1,15 +1,39 @@
 {
+  "avinguda paral·lel, 59, 08004, barcelona": {
+    "lat": 41.3750049,
+    "lng": 2.1597681,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "Avinguda Paral·lel, Sant Antoni, l'Eixample, Barcelona, Barcelonès, Barcelona, Catalunya, 08004, España"
+  },
   "carrer allada vermell, 15, 08003, barcelona": {
     "lat": 41.3867828,
     "lng": 2.1812609,
     "resolvedAt": "2026-08-30T06:55:13.923Z",
     "displayName": "15, Carrer d'Allada Vermell, la Ribera, Sant Pere, Santa Caterina i la Ribera, Ciutat Vella, Barcelona, Barcelonès, Barcelona, Catalunya, 08003, España"
   },
+  "carrer alpens, 3, 08014, barcelona": {
+    "lat": 41.3723495,
+    "lng": 2.1403087,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "Carrer d'Alpens, la Bordeta, Sants-Montjuïc, Barcelona, Barcelonès, Barcelona, Catalunya, 08014, España"
+  },
+  "carrer bailen 23, 08010, barcelona": {
+    "lat": 41.392585,
+    "lng": 2.1761613,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "23, Carrer de Bailèn, Triangle friqui, la Dreta de l'Eixample, l'Eixample, Barcelona, Barcelonès, Barcelona, Catalunya, 08010, España"
+  },
   "carrer buenos aires, 47-49, 08036, barcelona": {
     "lat": 41.3928877,
     "lng": 2.1477213,
     "resolvedAt": "2026-08-30T06:55:13.923Z",
     "displayName": "Carrer de Buenos Aires, l'Antiga Esquerra de l'Eixample, l'Eixample, Barcelona, Barcelonès, Barcelona, Catalunya, 08036, España"
+  },
+  "carrer casp, 8, 08010, barcelona": {
+    "lat": 41.3888056,
+    "lng": 2.17027,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "Teatre Tívoli, 8, Carrer de Casp, la Dreta de l'Eixample, l'Eixample, Barcelona, Barcelonès, Barcelona, Catalunya, 08010, España"
   },
   "carrer castillejos, 179, 08013, barcelona": {
     "lat": 41.4020744,
@@ -23,10 +47,52 @@
     "resolvedAt": "2026-08-30T06:55:13.923Z",
     "displayName": "Carrer Consell de Cent, Can Serra, Barberà del Vallès, Vallès Occidental, Barcelona, Catalunya, 08210, España"
   },
+  "carrer de bailen, 205, 08037, barcelona": {
+    "lat": 41.4020472,
+    "lng": 2.1636355,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "Espai Texas, 205, Carrer de Bailèn, la Vila de Gràcia, Gràcia, Barcelona, Barcelonès, Barcelona, Catalunya, 08037, España"
+  },
+  "carrer hospital, 51, 08001, barcelona": {
+    "lat": 41.3471746,
+    "lng": 2.0459933,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "Carrer Hospital, Barri Centre, Sant Boi de Llobregat, Baix Llobregat, Barcelona, Catalunya, 08830, España"
+  },
+  "carrer joaquin costa, 68, 08001, barcelona": {
+    "lat": 41.3840178,
+    "lng": 2.1642812,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "68-72, Carrer de Joaquín Costa, el Raval, Ciutat Vella, Barcelona, Barcelonès, Barcelona, Catalunya, 08011, España"
+  },
+  "carrer marti 18, 08024, barcelona": {
+    "lat": 41.4066659,
+    "lng": 2.1549408,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "L'autèntica Teatre, 18, Carrer de Martí, la Vila de Gràcia, Gràcia, Barcelona, Barcelonès, Barcelona, Catalunya, 08024, España"
+  },
+  "carrer muntaner, 4, 08011, barcelona": {
+    "lat": 41.3841161,
+    "lng": 2.162911,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "Teatre Muntaner, 4, Carrer de Muntaner, Sant Antoni, l'Eixample, Barcelona, Barcelonès, Barcelona, Catalunya, 08011, España"
+  },
   "carrer riereta, 31, 08001, barcelona": {
     "lat": 41.3777143,
     "lng": 2.1690553,
     "resolvedAt": "2026-08-30T06:55:13.923Z",
     "displayName": "31, Carrer de la Riereta, el Raval, Ciutat Vella, Barcelona, Barcelonès, Barcelona, Catalunya, 08001, España"
+  },
+  "quevedo, 36, 08012, barcelona": {
+    "lat": 41.4032288,
+    "lng": 2.161486,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "36, Carrer de Quevedo, la Vila de Gràcia, Gràcia, Barcelona, Barcelonès, Barcelona, Catalunya, 08012, España"
+  },
+  "verdaguer i callis, 12, 08003, barcelona": {
+    "lat": 41.3871439,
+    "lng": 2.1759024,
+    "resolvedAt": "2026-09-03T03:45:25.517Z",
+    "displayName": "12, Carrer de Verdaguer i Callís, Sant Pere, Sant Pere, Santa Caterina i la Ribera, Ciutat Vella, Barcelona, Barcelonès, Barcelona, Catalunya, 08003, España"
   }
 }
