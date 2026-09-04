@@ -1,28 +1,39 @@
-## Ejecución `submit` · **EN SECO** (no se llamó a ningún modelo)
+## Ejecución `submit`
 
-Colecciones: plans, shows · 2026-08-30T09:06:58.371+02:00
+Colecciones: plans, shows · 2026-09-04T04:54:54.702+02:00
 
 ### Embudo
 
 | Etapa | Cantidad | |
 |---|---:|---|
 | URL descubiertas | 95 |  |
-| descargadas | 6 | 0 sin cambios (304) |
-| candidatos | 5 |  |
-| clusters | 5 |  |
-| cribados | 1 | 0 desde caché |
+| descargadas | 31 | 0 sin cambios (304) |
+| candidatos | 26 |  |
+| clusters | 26 |  |
+| cribados | 12 | 0 desde caché |
 | seleccionados | 0 |  |
 | a redactar | 0 |  |
 
 ### Descartes del prefiltro (sin coste)
 
-- `fuera-de-ventana`: 4
+- `fuera-de-ventana`: 14
 
 ### Descartadas tras el cribado
 
 | Ficha | Motivo |
 |---|---|
-| sala-versus-glories | 23 puntos, por debajo de 62 |
+| teatre-goya | 21 puntos, por debajo de 62 |
+| lautentica-teatre | 25 puntos, por debajo de 62 |
+| espai-texas | 23 puntos, por debajo de 62 |
+| teatre-apolo | 21 puntos, por debajo de 62 |
+| teatre-muntaner | 23 puntos, por debajo de 62 |
+| teatre-apolo | 21 puntos, por debajo de 62 |
+| la-badabadoc | 25 puntos, por debajo de 62 |
+| la-badabadoc | 21 puntos, por debajo de 62 |
+| antic-teatre | 23 puntos, por debajo de 62 |
+| teatre-eolia | 25 puntos, por debajo de 62 |
+| teatre-tivoli | 23 puntos, por debajo de 62 |
+| la-badabadoc | 21 puntos, por debajo de 62 |
 
 ### Coste
 
@@ -37,3 +48,5 @@ Esta ejecución: **0.0000 €**
 - ⚠️ source visit-barcelona: sin verificar (falta verifiedAt): se omite del rastreo
 - ⚠️ source bcn-cultura: sin verificar (falta verifiedAt): se omite del rastreo
 - ⚠️ source articket: sin verificar (falta verifiedAt): se omite del rastreo
+- ⚠️ el proveedor de cribado falló: Falta OPENAI_API_KEY para openai. En local va en .env.local (que está en .gitignore); en Actions, como Secret del repositorio. NUNCA en el código.. Se sigue publicando lo ya escrito.
+- ⚠️ el modelo no devolvió veredicto para 12 candidatos
