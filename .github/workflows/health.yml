@@ -7,8 +7,10 @@ name: Health
 # se desploma— es peor que un fallo ruidoso. Esto la hace ruidosa.
 
 on:
-  schedule:
-    - cron: '0 6 * * 1' # lunes, después del rastreo de museos
+  # CRON DESACTIVADO (14-09-2026) junto con el de curate.yml; se reactiva
+  # descomentando y con `gh workflow enable Health`.
+  # schedule:
+  #   - cron: '0 6 * * 1' # lunes, después del rastreo de museos
   workflow_dispatch: {}
 
 permissions:

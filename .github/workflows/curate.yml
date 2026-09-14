@@ -11,10 +11,13 @@ name: Curate
 # cuando planonmap venga a por él.
 
 on:
-  schedule:
-    - cron: '30 2 * * *' # submit  · diario → planes y espectáculos
-    - cron: '0 2 * * 1' # submit  · lunes  → museos
-    - cron: '30 6,10,14 * * *' # collect · tres intentos de recogida
+  # CRON DESACTIVADO (14-09-2026) hasta cargar saldo en OpenAI y poner el secreto
+  # OPENAI_API_KEY (ver SIGUIENTE-PASO.md §3). Para reactivarlo: descomenta las
+  # tres líneas y ejecuta `gh workflow enable Curate`.
+  # schedule:
+  #   - cron: '30 2 * * *' # submit  · diario → planes y espectáculos
+  #   - cron: '0 2 * * 1' # submit  · lunes  → museos
+  #   - cron: '30 6,10,14 * * *' # collect · tres intentos de recogida
   workflow_dispatch:
     inputs:
       phase:
